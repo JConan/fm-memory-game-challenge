@@ -1,26 +1,21 @@
 import { FC } from "react";
 import { GameState } from "../components/Game";
+import { SelectOptions } from "../components/SelectOptions";
 import "./style.scss";
 
 const App: FC<{ state: GameState }> = ({ state }) => {
   return (
     <div className="App">
       <span>memory</span>
-      <span>select theme</span>
+      <SelectOptions
+        label="Select Theme"
+        values={["Numbers", "Icons"] as const}
+        selected={state.theme}
+        onSelect={(value) => state.setTheme(value)}
+      />
+
       <span>number of players</span>
       <span>Grid Size</span>
-      <button
-        className={`${state.theme === "numbers" ? "button-active" : ""}`}
-        onClick={() => state.setTheme("numbers")}
-      >
-        numbers
-      </button>
-      <button
-        className={`${state.theme === "icons" ? "button-active" : ""}`}
-        onClick={() => state.setTheme("icons")}
-      >
-        icons
-      </button>
       <button>1</button>
       <button>2</button>
       <button>3</button>

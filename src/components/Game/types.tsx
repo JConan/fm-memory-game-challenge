@@ -1,4 +1,4 @@
-export type GameTheme = "numbers" | "icons";
+export type GameTheme = "Numbers" | "Icons";
 
 export type GameGridSize = "4x4" | "6x6";
 

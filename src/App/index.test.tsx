@@ -23,17 +23,17 @@ describe("start game page", () => {
     const btnNumbers = screen.getByRole("button", { name: /^numbers$/i });
     const btnIcons = screen.getByRole("button", { name: /^icons$/i });
 
-    expect(gameState).toHaveProperty("theme", "numbers");
+    expect(gameState).toHaveProperty("theme", "Numbers");
     expect(btnNumbers).toHaveClass("button-active");
     expect(btnIcons).not.toHaveClass("button-active");
 
     userEvent.click(btnIcons);
-    expect(gameState).toHaveProperty("theme", "icons");
+    expect(gameState).toHaveProperty("theme", "Icons");
     expect(btnNumbers).not.toHaveClass("button-active");
     expect(btnIcons).toHaveClass("button-active");
 
     userEvent.click(btnNumbers);
-    expect(gameState).toHaveProperty("theme", "numbers");
+    expect(gameState).toHaveProperty("theme", "Numbers");
   });
 
   it("should be able to choose grid size", () => {
