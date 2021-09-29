@@ -1,14 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import App from "../App";
-import { useGameState, GameState } from "../components/Game";
+import Start from "../Start";
+import { useGameState, GameState } from "../../components/Game";
 
 describe("start game page", () => {
   let gameState: GameState;
 
   const WrappedApp = () => {
     gameState = useGameState();
-    return <App state={gameState} />;
+    return <Start state={gameState} />;
   };
 
   beforeEach(() => {
