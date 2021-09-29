@@ -54,12 +54,21 @@ describe("start game page", () => {
     expect(btn6x6).not.toHaveClass("button-active");
   });
 
-  it("should be able to choose number of players", () => {
-    screen.getByText(/^number of players$/i);
-    screen.getByRole("button", { name: /^1$/i });
-    screen.getByRole("button", { name: /^2$/i });
-    screen.getByRole("button", { name: /^3$/i });
-    screen.getByRole("button", { name: /^4$/i });
+  it("should be able to choose numbers of players", () => {
+    screen.getByText(/^numbers of players$/i);
+    const buttons = ["1", "2", "3", "4"].map((number) =>
+      screen.getByRole("button", { name: number })
+    );
+    expect(buttons[0]).toHaveClass("button-active");
+    expect(buttons[1]).not.toHaveClass("button-active");
+    expect(buttons[2]).not.toHaveClass("button-active");
+    expect(buttons[3]).not.toHaveClass("button-active");
+
+    userEvent.click(buttons[3]);
+    expect(buttons[0]).not.toHaveClass("button-active");
+    expect(buttons[1]).not.toHaveClass("button-active");
+    expect(buttons[2]).not.toHaveClass("button-active");
+    expect(buttons[3]).toHaveClass("button-active");
   });
 
   it("should be able to start a game", () => {
