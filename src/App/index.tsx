@@ -13,12 +13,14 @@ const App = () => {
 
   return (
     <Router>
-      <Switch>
-        <Route path="/start">
-          <Start state={state} />
-        </Route>
-        <Redirect path="/" to="/start" exact />
-      </Switch>
+      <div className="App">
+        <Switch>
+          <Route path="/start">
+            <Start state={state} />
+          </Route>
+          <Redirect path="/" to="/start" exact />
+        </Switch>
+      </div>
     </Router>
   );
 };

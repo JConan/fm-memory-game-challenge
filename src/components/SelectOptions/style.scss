@@ -1,0 +1,29 @@
+.select-options-container {
+  span {
+    display: block;
+    color: #7191a5;
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    user-select: none;
+  }
+  .select-options {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 -5.5px;
+
+    button {
+      font-size: 16px;
+      font-weight: 700;
+      background: #bcced9;
+      height: 40px;
+      margin: 5.5px;
+      &:hover {
+        background: #6395b8;
+      }
+      &.button-active {
+        background: #304859;
+      }
+    }
+  }
+}

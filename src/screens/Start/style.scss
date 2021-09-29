@@ -1,0 +1,18 @@
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 80px;
+}
+.configuration {
+  position: absolute;
+  top: 165px;
+  width: 327px;
+  height: 386px;
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
