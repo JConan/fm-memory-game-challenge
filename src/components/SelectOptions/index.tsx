@@ -1,16 +1,11 @@
-interface Props<V extends Readonly<string[]>, K = V[number]> {
-  label: string;
-  values: V;
-  selected: K;
-  onSelect: (value: K) => void;
-}
+import { SelectOptionsProps } from "./types";
 
 export const SelectOptions = <V extends Readonly<string[]>>({
   label,
   values,
   selected,
   onSelect,
-}: Props<V>) => (
+}: SelectOptionsProps<V>) => (
   <div>
     <span>{label}</span>
     {values.map((name, idx) => (

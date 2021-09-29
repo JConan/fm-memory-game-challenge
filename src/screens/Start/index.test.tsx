@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Start from "../Start";
+import { Start } from "../Start";
 import { useGameState, GameState } from "../../components/Game";
 
 describe("start game page", () => {

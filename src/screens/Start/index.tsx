@@ -3,7 +3,7 @@ import { GameState } from "../../components/Game";
 import { SelectOptions } from "../../components/SelectOptions";
 import "./style.scss";
 
-const Start: FC<{ state: GameState }> = ({ state }) => {
+export const Start: FC<{ state: GameState }> = ({ state }) => {
   return (
     <div className="App">
       <span>memory</span>
@@ -29,5 +29,3 @@ const Start: FC<{ state: GameState }> = ({ state }) => {
     </div>
   );
 };
-
-export default Start;
