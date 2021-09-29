@@ -5,7 +5,7 @@ import "./style.scss";
 
 export const Start: FC<{ state: GameState }> = ({ state }) => {
   return (
-    <>
+    <div className="screen-start-container">
       <span className="title">memory</span>
       <div className="configuration">
         <SelectOptions
@@ -28,6 +28,6 @@ export const Start: FC<{ state: GameState }> = ({ state }) => {
         />
         <button className="button-navigation">start game</button>
       </div>
-    </>
+    </div>
   );
 };
