@@ -1,1 +1,6 @@
 @import "reset-css/sass/_reset.scss";
+@import "./assets/fonts/AtkinsonHyperlegible/stylesheet.css";
+
+body * {
+  font-family: "Atkinson Hyperlegible";
+}
