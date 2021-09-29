@@ -25,8 +25,18 @@ const App: FC<{ state: GameState }> = ({ state }) => {
       <button>2</button>
       <button>3</button>
       <button>4</button>
-      <button>4x4</button>
-      <button>6x6</button>
+      <button
+        className={`${state.gridSize === "4x4" ? "button-active" : ""}`}
+        onClick={() => state.setGridSize("4x4")}
+      >
+        4x4
+      </button>
+      <button
+        className={`${state.gridSize === "6x6" ? "button-active" : ""}`}
+        onClick={() => state.setGridSize("6x6")}
+      >
+        6x6
+      </button>
       <button>start game</button>
     </div>
   );
