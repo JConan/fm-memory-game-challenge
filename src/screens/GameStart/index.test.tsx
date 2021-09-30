@@ -2,7 +2,7 @@ import userEvent from "@testing-library/user-event";
 import { useLocation, MemoryRouter } from "react-router";
 import { render, screen } from "@testing-library/react";
 import { Location } from "history";
-import { Start } from ".";
+import { GameStart } from ".";
 import { GameConfig, useGameConfig } from "hooks/GameConfig";
 
 describe("start game screen", () => {
@@ -12,7 +12,7 @@ describe("start game screen", () => {
   const WrappedApp = () => {
     gameState = useGameConfig();
     location = useLocation();
-    return <Start state={gameState} />;
+    return <GameStart state={gameState} />;
   };
 
   beforeEach(() => {

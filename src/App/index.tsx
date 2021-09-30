@@ -5,7 +5,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { useGameConfig } from "hooks/GameConfig";
-import { Start } from "screens/Start";
+import { GameStart } from "screens/GameStart";
 import { SoloGame } from "screens/SoloGame";
 import "./style.scss";
 
@@ -17,7 +17,7 @@ const App = () => {
       <Switch>
         <Route path="/game/solo/:size" component={SoloGame} />
         <Route path="/start">
-          <Start state={state} />
+          <GameStart state={state} />
         </Route>
         <Redirect path="/" to="/start" exact />
       </Switch>
