@@ -4,9 +4,9 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { useGameConfig } from "../hooks/GameConfig";
-import { Start } from "../screens/Start";
-import { SoloGame } from "../screens/SoloGame";
+import { useGameConfig } from "hooks/GameConfig";
+import { Start } from "screens/Start";
+import { SoloGame } from "screens/SoloGame";
 import "./style.scss";
 
 const App = () => {

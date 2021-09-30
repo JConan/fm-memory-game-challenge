@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { SoloGame } from "../SoloGame";
+import { SoloGame } from ".";
 
 describe("solo game small screen", () => {
   it("should have layout", () => {

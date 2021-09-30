@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { useGameConfig } from "../GameConfig";
 import { GameSettings } from "./types";
+import { useGameConfig } from ".";
 
 describe("hook for GameConfig", () => {
   it("should have initial value", () => {

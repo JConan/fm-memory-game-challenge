@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { GameConfig } from "../../hooks/GameConfig";
-import { SelectOptions } from "../../components/SelectOptions";
+import { GameConfig } from "hooks/GameConfig";
+import { SelectOptions } from "components/SelectOptions";
 import "./style.scss";
 
 export const Start: FC<{ state: GameConfig }> = ({ state }) => {

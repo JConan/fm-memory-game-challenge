@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Start } from "../Start";
-import { useGameConfig, GameConfig } from "../../hooks/GameConfig";
 import { useLocation, MemoryRouter } from "react-router";
+import { render, screen } from "@testing-library/react";
 import { Location } from "history";
+import { Start } from ".";
+import { GameConfig, useGameConfig } from "hooks/GameConfig";
 
 describe("start game screen", () => {
   let gameState: GameConfig;
