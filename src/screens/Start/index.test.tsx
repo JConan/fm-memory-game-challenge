@@ -1,7 +1,7 @@
-import { render, screen, act } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Start } from "../Start";
-import { useGameState, GameState } from "../../components/Game";
+import { useGameState, GameState } from "../../hooks/GameState";
 import { useLocation, MemoryRouter } from "react-router";
 import { Location } from "history";
 

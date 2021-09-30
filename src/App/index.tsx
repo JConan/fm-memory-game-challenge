@@ -4,7 +4,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { useGameState } from "../components/Game";
+import { useGameState } from "../hooks/GameState";
 import { Start } from "../screens/Start";
 import { SoloGame } from "../screens/SoloGame";
 import "./style.scss";

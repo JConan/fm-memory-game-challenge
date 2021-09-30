@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
-import { GameState } from "../../components/Game";
+import { GameState } from "../../hooks/GameState";
 import { SelectOptions } from "../../components/SelectOptions";
 import "./style.scss";
 
