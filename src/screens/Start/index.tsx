@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { GameState } from "../../components/Game";
 import { SelectOptions } from "../../components/SelectOptions";
 import "./style.scss";
@@ -18,7 +19,9 @@ export const Start: FC<{ state: GameState }> = ({ state }) => {
           label="Numbers of Players"
           values={["1", "2", "3", "4"] as const}
           selected={state.numberOfPlayer}
-          onSelect={(value) => state.setNumberOfPlayers(value)}
+          onSelect={(value) => {
+            state.setNumberOfPlayers(value);
+          }}
         />
         <SelectOptions
           label="Grid Size"
@@ -26,7 +29,13 @@ export const Start: FC<{ state: GameState }> = ({ state }) => {
           selected={state.gridSize}
           onSelect={(value) => state.setGridSize(value)}
         />
-        <button className="button-navigation">start game</button>
+        <Link
+          to={`/game/${state.numberOfPlayer === "1" ? "solo" : "multi"}/${
+            state.gridSize
+          }`}
+        >
+          <button className="button-navigation">start game</button>
+        </Link>
       </div>
     </div>
   );

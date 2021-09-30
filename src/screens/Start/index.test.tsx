@@ -1,18 +1,26 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Start } from "../Start";
 import { useGameState, GameState } from "../../components/Game";
+import { useLocation, MemoryRouter } from "react-router";
+import { Location } from "history";
 
-describe("start game page", () => {
+describe("start game screen", () => {
   let gameState: GameState;
+  let location: Location;
 
   const WrappedApp = () => {
     gameState = useGameState();
+    location = useLocation();
     return <Start state={gameState} />;
   };
 
   beforeEach(() => {
-    render(<WrappedApp />);
+    render(
+      <MemoryRouter initialEntries={["/start"]}>
+        <WrappedApp />
+      </MemoryRouter>
+    );
   });
   it("should have a title", () => {
     screen.getByText(/^memory$/i);
@@ -71,7 +79,25 @@ describe("start game page", () => {
     expect(buttons[3]).toHaveClass("button-active");
   });
 
-  it("should be able to start a game", () => {
-    screen.getByRole("button", { name: /^start game$/i });
+  it("should be able to start a game of size 4x4", () => {
+    const btnStart = screen.getByRole("button", { name: /^start game$/i });
+    userEvent.click(btnStart);
+    expect(location.pathname).toBe("/game/solo/4x4");
+  });
+
+  it("should be able to start a game of size 4x4 multiplayer", () => {
+    const btnMulti = screen.getByRole("button", { name: "2" });
+    const btnStart = screen.getByRole("button", { name: /^start game$/i });
+    userEvent.click(btnMulti);
+    userEvent.click(btnStart);
+    expect(location.pathname).toBe("/game/multi/4x4");
+  });
+
+  it("should be able to start a game of size 6x6", () => {
+    const btn6x6 = screen.getByRole("button", { name: /^6x6$/i });
+    const btnStart = screen.getByRole("button", { name: /^start game$/i });
+    userEvent.click(btn6x6);
+    userEvent.click(btnStart);
+    expect(location.pathname).toBe("/game/solo/6x6");
   });
 });

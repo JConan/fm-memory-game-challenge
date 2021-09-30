@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { useGameState } from "../components/Game";
 import { Start } from "../screens/Start";
+import { SoloGame } from "../screens/SoloGame";
 import "./style.scss";
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
   return (
     <Router>
       <Switch>
+        <Route path="/game/solo/:size" component={SoloGame} />
         <Route path="/start">
           <Start state={state} />
         </Route>
