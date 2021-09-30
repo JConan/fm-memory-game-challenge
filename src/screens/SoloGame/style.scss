@@ -1,0 +1,79 @@
+@import "../../sass/mixins/containers.scss";
+@import "../../sass/mixins/buttons.scss";
+
+.screen-container {
+  @include fullscreen-container();
+  justify-content: space-between;
+  padding: 24px;
+
+  header,
+  main,
+  footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  header {
+    height: 40px;
+    align-items: center;
+
+    span {
+      font-size: 24px;
+      font-weight: 700;
+      color: #152938;
+    }
+
+    button {
+      @include button-size-normal();
+      @include button-color-primary();
+      width: 78px;
+    }
+  }
+  footer {
+    height: 70px;
+
+    div {
+      flex: 1;
+      max-width: 151px;
+      background-color: #dfe7ec;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+
+      span:first-child {
+        color: #7191a5;
+        font-size: 15px;
+        font-weight: 700;
+      }
+      span:last-child {
+        color: #304859;
+        font-size: 24px;
+        font-weight: 700;
+      }
+    }
+  }
+  main {
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      li {
+        color: #fcfcfc;
+        font-size: 40px;
+        font-weight: 700;
+        background-color: #bcced9;
+        width: 72.53px;
+        height: 72.53px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
