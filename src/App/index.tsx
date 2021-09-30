@@ -4,13 +4,13 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { useGameState } from "../hooks/GameState";
+import { useGameConfig } from "../hooks/GameConfig";
 import { Start } from "../screens/Start";
 import { SoloGame } from "../screens/SoloGame";
 import "./style.scss";
 
 const App = () => {
-  const state = useGameState();
+  const state = useGameConfig();
 
   return (
     <Router>

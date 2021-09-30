@@ -1,12 +1,12 @@
 import { useState } from "react";
 import {
-  GameState,
+  GameConfig,
   GameTheme,
   GameGridSize,
   GameNumberOfPlayers,
 } from "./types";
 
-export const useGameState = (): GameState => {
+export const useGameConfig = (): GameConfig => {
   const [theme, setTheme] = useState<GameTheme>("Numbers");
   const [gridSize, setGridSize] = useState<GameGridSize>("4x4");
   const [numberOfPlayer, setNumberOfPlayers] =

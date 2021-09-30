@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^7.0.2",
     "@types/faker": "^5.5.8",
     "faker": "^5.5.3"
   }

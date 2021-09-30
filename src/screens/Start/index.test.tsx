@@ -1,16 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Start } from "../Start";
-import { useGameState, GameState } from "../../hooks/GameState";
+import { useGameConfig, GameConfig } from "../../hooks/GameConfig";
 import { useLocation, MemoryRouter } from "react-router";
 import { Location } from "history";
 
 describe("start game screen", () => {
-  let gameState: GameState;
+  let gameState: GameConfig;
   let location: Location;
 
   const WrappedApp = () => {
-    gameState = useGameState();
+    gameState = useGameConfig();
     location = useLocation();
     return <Start state={gameState} />;
   };
