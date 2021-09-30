@@ -1,3 +1,5 @@
+@import "../../sass/mixins/buttons.scss";
+
 .select-options-container {
   span {
     display: block;
@@ -13,16 +15,15 @@
     margin: 0 -5.5px;
 
     button {
-      font-size: 16px;
-      font-weight: 700;
-      background: #bcced9;
-      height: 40px;
+      @include button-size-normal();
+      @include button-color-options();
+
       margin: 5.5px;
       &:hover {
-        background: #6395b8;
+        @include button-color-options-hover();
       }
       &.button-active {
-        background: #304859;
+        @include button-color-options-selected();
       }
     }
   }

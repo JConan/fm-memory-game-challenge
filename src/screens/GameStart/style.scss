@@ -1,11 +1,9 @@
+@import "../../sass/mixins/containers.scss";
+@import "../../sass/mixins/buttons.scss";
+
 .screen-start-container {
+  @include fullscreen-container();
   background-color: #152938;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
   color: white;
 
   .title {
@@ -25,5 +23,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+  .button-navigation {
+    @include button-size-big();
+    @include button-color-primary();
+
+    &:hover {
+      @include button-color-primary-hover();
+    }
   }
 }
