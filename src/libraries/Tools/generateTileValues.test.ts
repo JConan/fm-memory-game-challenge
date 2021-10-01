@@ -1,5 +1,5 @@
 import { Chance } from "chance";
-import { GameGridSize } from "../../hooks/GameConfig";
+import { GameGridSize } from "hooks/GameConfig";
 import { generateTileValues } from "./generateTileValues";
 
 describe("generate values used by the tiles in the memory games", () => {

@@ -1,5 +1,5 @@
 import { Chance } from "chance";
-import { GameGridSize } from "../../hooks/GameConfig";
+import { GameGridSize } from "hooks/GameConfig";
 
 export interface GenerateTileValuesProps {
   gridSize: GameGridSize;
