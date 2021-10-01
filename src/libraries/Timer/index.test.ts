@@ -48,4 +48,24 @@ describe("timer function", () => {
     jest.advanceTimersByTime(1000);
     expect(mock).toBeCalledTimes(10);
   });
+
+  it("should be safe to call multiple time start/stop op", () => {
+    const timer = createTimer({ tickInterval: 1000 });
+
+    timer.start();
+    timer.start();
+    jest.advanceTimersByTime(1000);
+    expect(timer.tickCount).toEqual(1);
+
+    timer.stop();
+    timer.stop();
+    jest.advanceTimersByTime(1000);
+    expect(timer.tickCount).toEqual(1);
+
+    timer.start();
+    timer.start();
+    jest.advanceTimersByTime(4000);
+
+    expect(timer.tickCount).toEqual(5);
+  });
 });
