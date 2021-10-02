@@ -2,7 +2,7 @@ import userEvent from "@testing-library/user-event";
 import { useLocation, MemoryRouter } from "react-router";
 import { render, screen } from "@testing-library/react";
 import { Location } from "history";
-import { GameStart } from ".";
+import { GameStart } from "./GameStart";
 import { GameConfig, useGameConfig } from "hooks/GameConfig";
 
 describe("start game screen", () => {

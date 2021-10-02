@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { createTimer } from "libraries/Timer";
+import { createTimer } from "libraries/Tools";
 
 export const useTimer = () => {
   const isMounted = useRef(true);
@@ -23,9 +23,5 @@ export const useTimer = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return {
-    value,
-    start,
-    stop,
-  };
+  return { value, start, stop };
 };

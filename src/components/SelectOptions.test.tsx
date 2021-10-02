@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { random } from "faker";
 import { useState } from "react";
-import { SelectOptions } from ".";
+import { SelectOptions } from "./SelectOptions";
 
 describe("build a generic select option component", () => {
   const label = random.word();

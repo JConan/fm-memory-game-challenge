@@ -1,11 +1,5 @@
 import { Chance } from "chance";
-import { GameGridSize } from "hooks/GameConfig";
-
-export interface GenerateTileValuesProps {
-  gridSize: GameGridSize;
-}
-
-export type GenerateTileValues = (props: GenerateTileValuesProps) => number[];
+import { GenerateTileValues } from "./types";
 
 export const generateTileValues: GenerateTileValues = ({ gridSize }) =>
   Chance().shuffle(
