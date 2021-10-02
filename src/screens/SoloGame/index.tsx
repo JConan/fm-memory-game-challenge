@@ -1,8 +1,22 @@
 import { useTimer } from "hooks/Timer";
+import { generateTileValues } from "libraries/Tools";
+import { loadIcons } from "components/TileIcons";
+import { Chance } from "chance";
 import "./style.scss";
+import { useEffect, useState } from "react";
+import { GameTheme } from "hooks/GameConfig";
 
 export const SoloGame = () => {
+  const [tileValues, setTileValues] = useState<number[]>(null!);
+  const [iconSet, setIconSet] = useState<JSX.Element[]>(null!);
+  const [theme, setTheme] = useState<GameTheme>("Icons");
   const { value: timerValue } = useTimer();
+
+  useEffect(() => {
+    setTheme("Icons");
+    setTileValues(generateTileValues({ gridSize: "4x4" }));
+    setIconSet(Chance().shuffle(loadIcons()));
+  }, []);
 
   return (
     <div className="screen-container">
@@ -12,22 +26,12 @@ export const SoloGame = () => {
       </header>
       <main>
         <ul aria-label="memory item list">
-          <li aria-label="memory item">1</li>
-          <li aria-label="memory item">2</li>
-          <li aria-label="memory item">3</li>
-          <li aria-label="memory item">4</li>
-          <li aria-label="memory item">5</li>
-          <li aria-label="memory item">6</li>
-          <li aria-label="memory item">7</li>
-          <li aria-label="memory item">8</li>
-          <li aria-label="memory item">9</li>
-          <li aria-label="memory item">10</li>
-          <li aria-label="memory item">11</li>
-          <li aria-label="memory item">12</li>
-          <li aria-label="memory item">13</li>
-          <li aria-label="memory item">14</li>
-          <li aria-label="memory item">15</li>
-          <li aria-label="memory item">16</li>
+          {tileValues &&
+            tileValues.map((tileValue, idx) => (
+              <li key={idx} aria-label="memory item">
+                {theme === "Numbers" ? tileValue : iconSet[tileValue]}
+              </li>
+            ))}
         </ul>
       </main>
       <footer>
