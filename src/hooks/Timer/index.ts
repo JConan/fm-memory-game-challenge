@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createTimer } from "libraries/Tools";
+import { UseTimer } from "./types";
 
-export const useTimer = () => {
+export const useTimer: UseTimer = () => {
   const isMounted = useRef(true);
   const [value, setvalue] = useState("0:00");
 
