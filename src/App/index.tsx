@@ -15,7 +15,9 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/game/solo/:size" component={SoloGame} />
+        <Route path="/game/solo/:size">
+          <SoloGame state={state} />
+        </Route>
         <Route path="/start">
           <GameStart state={state} />
         </Route>

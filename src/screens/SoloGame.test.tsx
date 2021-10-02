@@ -1,9 +1,16 @@
 import { render, screen } from "@testing-library/react";
+import { useGameConfig } from "hooks/GameConfig";
 import { SoloGame } from "./SoloGame";
 
 describe("solo game small screen", () => {
+  const WrappedSoloGame = () => {
+    const state = useGameConfig();
+
+    return <SoloGame state={state} />;
+  };
+
   it("should have layout", () => {
-    render(<SoloGame />);
+    render(<WrappedSoloGame />);
     screen.getByText(/memory/i);
     screen.getByRole("button", { name: /menu/i });
     screen.getByRole("list", { name: /memory item list/i });

@@ -4,16 +4,16 @@ import { loadIcons } from "components/TileIcons";
 import { Chance } from "chance";
 import "./style.scss";
 import { useEffect, useState } from "react";
-import { GameTheme } from "hooks/GameConfig";
+import { GameConfig } from "hooks/GameConfig";
 
-export const SoloGame = () => {
+export const SoloGame: React.FC<{ state: GameConfig }> = ({
+  state: { theme },
+}) => {
   const [tileValues, setTileValues] = useState<number[]>(null!);
   const [iconSet, setIconSet] = useState<JSX.Element[]>(null!);
-  const [theme, setTheme] = useState<GameTheme>("Icons");
   const { value: timerValue } = useTimer();
 
   useEffect(() => {
-    setTheme("Icons");
     setTileValues(generateTileValues({ gridSize: "4x4" }));
     setIconSet(Chance().shuffle(loadIcons()));
   }, []);

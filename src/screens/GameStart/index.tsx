@@ -1,10 +1,9 @@
-import { FC } from "react";
 import { Link } from "react-router-dom";
 import { GameConfig } from "hooks/GameConfig";
 import { SelectOptions } from "components/SelectOptions";
 import "./style.scss";
 
-export const GameStart: FC<{ state: GameConfig }> = ({ state }) => {
+export const GameStart: React.FC<{ state: GameConfig }> = ({ state }) => {
   return (
     <div className="screen-start-container">
       <span className="title">memory</span>
