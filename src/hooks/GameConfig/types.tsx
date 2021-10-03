@@ -8,6 +8,7 @@ export interface GameSettings {
   theme: GameTheme;
   gridSize: GameGridSize;
   numberOfPlayer: GameNumberOfPlayers;
+  tilesResolutionDelay: number;
 }
 
 export type GameConfig = GameSettings & {

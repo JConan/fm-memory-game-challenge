@@ -1,41 +1,68 @@
 import { GameGridSize, GameSettings } from "hooks/GameConfig";
+import { useDelayFlipFlop } from "hooks/DelayFlipFlop";
 import { generateTileValues } from "libraries/Tools";
 import { useEffect, useState } from "react";
 
-type TyleState = "hidden" | "selected" | "paired";
+export type TyleState = "hidden" | "selected" | "paired";
 
-interface TileState {
+export interface TileState {
   id: number;
   value: number;
   state: TyleState;
 }
 
-export const useGameCore = ({ gridSize }: GameSettings) => {
+export const useGameCore = ({
+  gridSize,
+  tilesResolutionDelay: delay,
+}: GameSettings) => {
+  const { state: isDelaying, pulse } = useDelayFlipFlop({ delay });
   const [isLoaded, setLoaded] = useState(false);
   const [tiles, setTiles] = useState<TileState[]>(undefined!);
+  const [selectedTiles, setSelectedTiles] = useState<TileState[]>([]);
 
+  // initialize tiles
   useInitTiles(gridSize, setTiles, setLoaded);
 
+  // resolve tiles states after pulse ended
   useEffect(() => {
-    if (isLoaded) {
-      const selectedTiles = findTilesBy(tiles, { state: "selected" });
-      if (selectedTiles.length === 2)
-        if (selectedTiles[0].value === selectedTiles[1].value) {
-          const updatedTiles = updateTiles(tiles, selectedTiles, "paired");
-          setTiles(updatedTiles);
+    if (isLoaded && !isDelaying) {
+      if (selectedTiles.length >= 2) {
+        // cleanup selections
+        const _selectedTiles = [...selectedTiles];
+        if (_selectedTiles.length % 2 !== 0) {
+          setSelectedTiles([_selectedTiles.pop()!]);
         } else {
-          const updatedTiles = updateTiles(tiles, selectedTiles, "hidden");
-          setTiles(updatedTiles);
+          setSelectedTiles([]);
         }
-    }
-  }, [isLoaded, tiles]);
 
+        // resolve tiles states
+        const toUpdate = _selectedTiles.map(
+          (tile) =>
+            (findTilesBy(_selectedTiles, { value: tile.value }).length === 2
+              ? { ...tile, state: "paired" }
+              : { ...tile, state: "hidden" }) as TileState
+        );
+        const updatedTiles = tiles.map((tile) => {
+          const result = toUpdate.find(({ id }) => tile.id === id);
+          return result ? result : tile;
+        });
+        setTiles(updatedTiles);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDelaying]);
+
+  // update tile & give a pulse
   const onSelectTile = ({ id }: { id: number }) => {
-    const selectedTile = findTilesBy(tiles, { id })[0];
-    if (selectedTile.state === "hidden") {
-      const updatedTiles = updateTiles(tiles, [selectedTile], "selected");
-      updatedTiles.sort((a, b) => a.id - b.id);
-      setTiles(updatedTiles);
+    if (isLoaded) {
+      const selectedTile = findTilesBy(tiles, { id })[0];
+      setSelectedTiles([...selectedTiles, selectedTile]);
+      if (selectedTile.state === "hidden") {
+        const updatedTiles = updateTiles(tiles, [selectedTile], "selected");
+        updatedTiles.sort((a, b) => a.id - b.id);
+        setTiles(updatedTiles);
+        pulse();
+      }
     }
   };
 
@@ -75,10 +102,7 @@ const updateTiles = (
   });
 };
 
-const findTilesBy = (
-  tiles: TileState[],
-  filter: { id?: number; state?: TyleState }
-) =>
+const findTilesBy = (tiles: TileState[], filter: Partial<TileState>) =>
   Object.keys(filter)
     .map((key) =>
       tiles.filter(

@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
-import { useGameCore } from "./GameCore";
+import { TileState, useGameCore } from "./GameCore";
 
 describe("hook for GameCore", () => {
   const initGameCoreHook = () => {
@@ -9,9 +9,23 @@ describe("hook for GameCore", () => {
         gridSize: "4x4",
         numberOfPlayer: "1",
         theme: "Icons",
+        tilesResolutionDelay: 100,
       })
     );
   };
+
+  const getUniqueTiles = (tiles: TileState[]) =>
+    tiles.filter(
+      (tile, idx) =>
+        tiles.findIndex(({ value }) => value === tile.value) === idx
+    );
+
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+  afterEach(() => {
+    jest.useRealTimers();
+  });
 
   it("should have a initial state", () => {
     const { result } = initGameCoreHook();
@@ -33,44 +47,114 @@ describe("hook for GameCore", () => {
     expect(result.current.tiles[0].state).toBe("selected");
   });
 
+  it("should be able to select a pair of tiles", async () => {
+    const { result } = initGameCoreHook();
+
+    // select two different tiles
+    const firstTile = () => getUniqueTiles(result.current.tiles)[0];
+    const secondTile = () => getUniqueTiles(result.current.tiles)[1];
+
+    act(() => {
+      result.current.onSelectTile({ id: firstTile().id });
+    });
+    expect(firstTile().state).toEqual("selected");
+    expect(secondTile().state).toEqual("hidden");
+
+    act(() => {
+      result.current.onSelectTile({ id: secondTile().id });
+    });
+    expect(firstTile().state).toEqual("selected");
+    expect(secondTile().state).toEqual("selected");
+
+    act(() => {
+      jest.advanceTimersByTime(100);
+    });
+    expect(firstTile().state).toEqual("hidden");
+    expect(secondTile().state).toEqual("hidden");
+  });
+
   it("should be able to pair a set of tiles", async () => {
     const { result, waitForNextUpdate } = initGameCoreHook();
 
-    const pairOfTIle = result.current.tiles.filter((tile) => tile.value === 7);
-    expect(pairOfTIle).toHaveLength(2);
+    const pairOfTIle = () =>
+      result.current.tiles.filter((tile) => tile.value === 7);
+    expect(pairOfTIle()).toHaveLength(2);
 
     await act(async () => {
-      result.current.onSelectTile({ id: pairOfTIle[0].id });
+      result.current.onSelectTile({ id: pairOfTIle()[0].id });
       await waitForNextUpdate();
-      result.current.onSelectTile({ id: pairOfTIle[1].id });
+      result.current.onSelectTile({ id: pairOfTIle()[1].id });
     });
 
-    const pairOfTIleUpdated = result.current.tiles.filter(
-      (tile) => tile.value === 7
-    );
-    expect(pairOfTIleUpdated[0].state).toBe("paired");
-    expect(pairOfTIleUpdated[1].state).toBe("paired");
+    expect(pairOfTIle()[0].state).toBe("selected");
+    expect(pairOfTIle()[1].state).toBe("selected");
+
+    act(() => {
+      jest.advanceTimersByTime(100);
+    });
+    expect(pairOfTIle()[0].state).toBe("paired");
+    expect(pairOfTIle()[1].state).toBe("paired");
   });
 
-  it("should be able to hide back wrong pair", async () => {
-    const { result, waitForNextUpdate } = initGameCoreHook();
+  it("should be able to resolve states after 4 tiles is selected", async () => {
+    const { result } = initGameCoreHook();
 
-    const pairOfTIle = result.current.tiles.filter((tile) => tile.value === 7);
-    const otherPairOfTIle = result.current.tiles.filter(
-      (tile) => tile.value === 1
-    );
-    expect(pairOfTIle).toHaveLength(2);
+    const getFourUniqueTiles = () =>
+      getUniqueTiles(result.current.tiles).slice(0, 4);
 
-    await act(async () => {
-      result.current.onSelectTile({ id: pairOfTIle[0].id });
-      await waitForNextUpdate();
-      result.current.onSelectTile({ id: otherPairOfTIle[1].id });
+    // select tiles in sequence
+    getFourUniqueTiles().forEach(({ id }) => {
+      act(() => {
+        result.current.onSelectTile({ id });
+      });
     });
 
-    const pairOfTIleUpdated = result.current.tiles.filter(
-      (tile) => tile.value === 7
-    );
-    expect(pairOfTIleUpdated[0].state).toBe("hidden");
-    expect(pairOfTIleUpdated[1].state).toBe("hidden");
+    // expect state of each tile
+    getFourUniqueTiles().forEach((tile, idx) => {
+      expect(tile.state).toBe("selected");
+    });
+
+    // resolve timer delay
+    act(() => {
+      jest.advanceTimersByTime(100);
+    });
+
+    // expect state of each tile
+    getFourUniqueTiles().forEach((tile) => {
+      expect(tile.state).toBe("hidden");
+    });
+  });
+
+  it("should be able to resolve states after 5 tiles is selected", async () => {
+    const { result } = initGameCoreHook();
+
+    const getFiveUniqueTiles = () =>
+      getUniqueTiles(result.current.tiles).slice(0, 5);
+
+    // select tiles in sequence
+    getFiveUniqueTiles().forEach(({ id }) => {
+      act(() => {
+        result.current.onSelectTile({ id });
+      });
+    });
+
+    // expect state of each tile
+    getFiveUniqueTiles().forEach((tile, idx) => {
+      expect(tile.state).toBe("selected");
+    });
+
+    // resolve timer delay
+    act(() => {
+      jest.advanceTimersByTime(100);
+    });
+
+    // last tile should remain selected
+    const tiles = getFiveUniqueTiles();
+    expect(tiles.pop()!.state).toBe("selected");
+
+    // expect state of other tiles
+    tiles.forEach((tile, idx) => {
+      expect(tile.state).toBe("hidden");
+    });
   });
 });
