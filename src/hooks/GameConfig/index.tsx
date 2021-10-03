@@ -16,7 +16,7 @@ export const useGameConfig = (): GameConfig => {
     theme,
     gridSize,
     numberOfPlayer,
-    tilesResolutionDelay: 1000,
+    tilesResolutionDelay: 650,
     setTheme,
     setGridSize,
     setNumberOfPlayers,
