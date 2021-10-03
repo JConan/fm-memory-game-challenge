@@ -11,10 +11,16 @@ export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
 
   const [iconSet, setIconSet] = useState<JSX.Element[]>(null!);
   const { value: timerValue } = useTimer();
+  const [moveCount, setMoveCount] = useState(0);
 
   useEffect(() => {
     setIconSet(Chance().shuffle(loadIcons()));
   }, []);
+
+  const onTileClick = (id: number) => {
+    setMoveCount(moveCount + 1);
+    onSelectTile({ id });
+  };
 
   return (
     <div className="screen-container">
@@ -29,7 +35,7 @@ export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
               <li
                 key={idx}
                 aria-label="memory item"
-                onClick={() => onSelectTile({ id: tile.id })}
+                onClick={() => onTileClick(tile.id)}
                 className={`tile-${tile.state} tile-size-${setting.gridSize}`}
               >
                 {tile.state !== "hidden" &&
@@ -47,7 +53,7 @@ export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
         </div>
         <div role="status" aria-label="moves">
           <span>Moves</span>
-          <span>36</span>
+          <span>{moveCount}</span>
         </div>
       </footer>
     </div>
