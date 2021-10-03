@@ -54,6 +54,8 @@ export const useGameCore = ({
 
   // update tile & give a pulse
   const onSelectTile = ({ id }: { id: number }) => {
+    if (findTilesBy(selectedTiles, { id }).length !== 0) return;
+
     if (isLoaded && selectedTiles.length < 2) {
       const selectedTile = findTilesBy(tiles, { id })[0];
       setSelectedTiles([...selectedTiles, selectedTile]);

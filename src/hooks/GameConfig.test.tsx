@@ -9,6 +9,7 @@ describe("hook for GameConfig", () => {
       gridSize: "4x4",
       numberOfPlayer: "1",
       theme: "Numbers",
+      tilesResolutionDelay: 1000,
     };
     expect(result.current).toMatchObject(defaultSettings);
   });

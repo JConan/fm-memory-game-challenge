@@ -34,12 +34,12 @@ describe("hook for GameCore", () => {
     expect(result.current.tiles).toHaveLength(16);
   });
 
-  it("should be able to select a tile", async () => {
+  it("should be able to select a tile", () => {
     const { result } = initGameCoreHook();
 
     const tile = result.current.tiles[0];
     expect(tile.state).toBe("hidden");
-    await act(async () => {
+    act(() => {
       result.current.onSelectTile({ id: tile.id });
     });
 
@@ -47,7 +47,7 @@ describe("hook for GameCore", () => {
     expect(result.current.tiles[0].state).toBe("selected");
   });
 
-  it("should be able to select a pair of tiles", async () => {
+  it("should be able to select a pair of tiles", () => {
     const { result } = initGameCoreHook();
 
     // select two different tiles
@@ -73,26 +73,41 @@ describe("hook for GameCore", () => {
     expect(secondTile().state).toEqual("hidden");
   });
 
-  it("should be able to pair a set of tiles", async () => {
-    const { result, waitForNextUpdate } = initGameCoreHook();
+  it("should be able to pair a set of tiles", () => {
+    const { result } = initGameCoreHook();
 
-    const pairOfTIle = () =>
+    const pairOfTiles = () =>
       result.current.tiles.filter((tile) => tile.value === 7);
-    expect(pairOfTIle()).toHaveLength(2);
+    expect(pairOfTiles()).toHaveLength(2);
 
-    await act(async () => {
-      result.current.onSelectTile({ id: pairOfTIle()[0].id });
-      await waitForNextUpdate();
-      result.current.onSelectTile({ id: pairOfTIle()[1].id });
+    pairOfTiles().forEach(({ id }) => {
+      act(() => {
+        result.current.onSelectTile({ id });
+      });
     });
 
-    expect(pairOfTIle()[0].state).toBe("selected");
-    expect(pairOfTIle()[1].state).toBe("selected");
+    expect(pairOfTiles()[0].state).toBe("selected");
+    expect(pairOfTiles()[1].state).toBe("selected");
 
     act(() => {
       jest.advanceTimersByTime(100);
     });
-    expect(pairOfTIle()[0].state).toBe("paired");
-    expect(pairOfTIle()[1].state).toBe("paired");
+    expect(pairOfTiles()[0].state).toBe("paired");
+    expect(pairOfTiles()[1].state).toBe("paired");
+  });
+
+  it("should ignore selected the same tile twice", async () => {
+    const { result } = initGameCoreHook();
+
+    [1, 2].forEach(() => {
+      act(() => {
+        result.current.onSelectTile({ id: result.current.tiles[0].id });
+      });
+    });
+    act(() => {
+      jest.advanceTimersByTime(100);
+    });
+
+    expect(result.current.tiles[0].state).toBe("selected");
   });
 });
