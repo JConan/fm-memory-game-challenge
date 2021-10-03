@@ -55,7 +55,12 @@ Users should be able to:
 
 ### What I learned
 
-> _[TODO]_
+I am sticking to the TDD lifecycle and what I learn most is about how use Timer Mocks with jest.
+Indeed, there is a need to implement a Timer function for displaying the total time past in the game.
+I also needed some sort of "time-based flip-flop switch" in order to delay the resolution of the tiles states.
+
+- jest.useFakeTimers
+- jest.advanceTimersByTime
 
 ### Continued development
 
@@ -63,8 +68,9 @@ Users should be able to:
 
 ### Useful resources
 
-> _[TODO]_
+[Timer Mocks](https://jestjs.io/docs/timer-mocks)
 
 ## Author
 
 - Frontend Mentor - [@JConan](https://www.frontendmentor.io/profile/JConan)
+- Code Wars - [@JConan](https://www.codewars.com/users/JConan)
