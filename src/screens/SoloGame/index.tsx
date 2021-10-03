@@ -30,6 +30,7 @@ export const SoloGame: React.FC<GameSettings> = (setting) => {
                 key={idx}
                 aria-label="memory item"
                 onClick={() => onSelectTile({ id: tile.id })}
+                className={`tile-${tile.state}`}
               >
                 {tile.state !== "hidden" &&
                   (setting.theme === "Numbers"

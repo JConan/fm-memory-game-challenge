@@ -70,7 +70,6 @@
         color: #fcfcfc;
         font-size: 40px;
         font-weight: 700;
-        background-color: #bcced9;
         min-width: 72.53px;
         min-height: 72.53px;
         border-radius: 50%;
@@ -82,6 +81,19 @@
 
         cursor: pointer;
         caret-color: #00000000;
+
+        &.tile-hidden {
+          background-color: #304859;
+          color: #fcfcfc00;
+        }
+        &.tile-selected {
+          background-color: #fda214;
+        }
+        &.tile-paired {
+          background-color: #bcced9;
+        }
+        transition: background-color 85ms ease-in-out;
+        transition: color 85ms ease-in-out;
       }
     }
   }
