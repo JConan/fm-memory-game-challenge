@@ -68,19 +68,30 @@
 
       li {
         color: #fcfcfc;
-        font-size: 40px;
-        font-weight: 700;
-        min-width: 72.53px;
-        min-height: 72.53px;
         border-radius: 50%;
         flex-shrink: 0;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 10px;
 
         cursor: pointer;
         caret-color: #00000000;
+
+        &.tile-size-4x4 {
+          font-size: 40px;
+          font-weight: 700;
+          min-width: 72.53px;
+          min-height: 72.53px;
+          margin-bottom: 10px;
+        }
+
+        &.tile-size-6x6 {
+          font-size: 24px;
+          font-weight: 700;
+          min-width: 46.88px;
+          min-height: 46.88px;
+          margin-bottom: 8px;
+        }
 
         &.tile-hidden {
           background-color: #304859;
