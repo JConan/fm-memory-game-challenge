@@ -10,20 +10,24 @@ import { SoloGame } from "screens/SoloGame";
 import "./style.scss";
 
 const App = () => {
-  const state = useGameConfig();
+  const state = useGameConfig({ useLocalStorage: true });
 
   return (
-    <Router>
-      <Switch>
-        <Route path="/game/solo/:size">
-          <SoloGame {...(state as GameSettings)} />
-        </Route>
-        <Route path="/start">
-          <GameStart state={state} />
-        </Route>
-        <Redirect path="/" to="/start" exact />
-      </Switch>
-    </Router>
+    <>
+      {state.isLoaded && (
+        <Router>
+          <Switch>
+            <Route path="/game/solo/:size">
+              <SoloGame setting={state as GameSettings} />
+            </Route>
+            <Route path="/start">
+              <GameStart state={state} />
+            </Route>
+            <Redirect path="/" to="/start" exact />
+          </Switch>
+        </Router>
+      )}
+    </>
   );
 };
 

@@ -1,12 +1,12 @@
 import { useTimer } from "hooks/Timer";
 import { loadIcons } from "components/TileIcons";
 import { Chance } from "chance";
-import "./style.scss";
 import { useEffect, useState } from "react";
 import { GameSettings } from "hooks/GameConfig";
 import { useGameCore } from "hooks/GameCore";
+import "./style.scss";
 
-export const SoloGame: React.FC<GameSettings> = (setting) => {
+export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
   const { isLoaded, tiles, onSelectTile } = useGameCore(setting);
 
   const [iconSet, setIconSet] = useState<JSX.Element[]>(null!);

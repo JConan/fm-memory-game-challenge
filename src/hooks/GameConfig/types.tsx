@@ -5,6 +5,7 @@ export type GameGridSize = "4x4" | "6x6";
 export type GameNumberOfPlayers = "1" | "2" | "3" | "4";
 
 export interface GameSettings {
+  isLoaded: boolean;
   theme: GameTheme;
   gridSize: GameGridSize;
   numberOfPlayer: GameNumberOfPlayers;
@@ -16,3 +17,7 @@ export type GameConfig = GameSettings & {
   setGridSize: (gridSize: GameGridSize) => void;
   setNumberOfPlayers: (number: GameNumberOfPlayers) => void;
 };
+
+export type UseGameConfig = (props?: {
+  useLocalStorage?: boolean;
+}) => GameConfig;
