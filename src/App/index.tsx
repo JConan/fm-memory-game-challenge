@@ -17,7 +17,7 @@ const App = () => {
       {state.isLoaded && (
         <Router>
           <Switch>
-            <Route path="/game/solo/:size">
+            <Route path="/game/solo">
               <SoloGame setting={state as GameSettings} />
             </Route>
             <Route path="/start">
