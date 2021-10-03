@@ -1,20 +1,18 @@
 import { useTimer } from "hooks/Timer";
-import { generateTileValues } from "libraries/Tools";
 import { loadIcons } from "components/TileIcons";
 import { Chance } from "chance";
 import "./style.scss";
 import { useEffect, useState } from "react";
-import { GameConfig } from "hooks/GameConfig";
+import { GameSettings } from "hooks/GameConfig";
+import { useGameCore } from "hooks/GameCore";
 
-export const SoloGame: React.FC<{ state: GameConfig }> = ({
-  state: { theme },
-}) => {
-  const [tileValues, setTileValues] = useState<number[]>(null!);
+export const SoloGame: React.FC<GameSettings> = (setting) => {
+  const { isLoaded, tiles, onSelectTile } = useGameCore(setting);
+
   const [iconSet, setIconSet] = useState<JSX.Element[]>(null!);
   const { value: timerValue } = useTimer();
 
   useEffect(() => {
-    setTileValues(generateTileValues({ gridSize: "4x4" }));
     setIconSet(Chance().shuffle(loadIcons()));
   }, []);
 
@@ -26,10 +24,17 @@ export const SoloGame: React.FC<{ state: GameConfig }> = ({
       </header>
       <main>
         <ul aria-label="memory item list">
-          {tileValues &&
-            tileValues.map((tileValue, idx) => (
-              <li key={idx} aria-label="memory item">
-                {theme === "Numbers" ? tileValue : iconSet[tileValue]}
+          {isLoaded &&
+            tiles.map((tile, idx) => (
+              <li
+                key={idx}
+                aria-label="memory item"
+                onClick={() => onSelectTile({ id: tile.id })}
+              >
+                {tile.state !== "hidden" &&
+                  (setting.theme === "Numbers"
+                    ? tile.value
+                    : iconSet[tile.value])}
               </li>
             ))}
         </ul>

@@ -6,7 +6,7 @@ describe("solo game small screen", () => {
   const WrappedSoloGame = () => {
     const state = useGameConfig();
 
-    return <SoloGame state={state} />;
+    return <SoloGame {...state} />;
   };
 
   it("should have layout", () => {
