@@ -13,28 +13,31 @@
 @mixin button-color-primary {
   color: #fcfcfc;
   background: #fda214;
-}
-@mixin button-color-primary-hover {
-  color: #fcfcfc;
-  background: #ffb84a;
+
+  &:hover {
+    color: #fcfcfc;
+    background: #ffb84a;
+  }
 }
 @mixin button-color-secondary {
   color: #304859;
   background: #dfe7ec;
-}
-@mixin button-color-secondary-hover {
-  color: #fcfcfc;
-  background: #6395b8;
+
+  &:hover {
+    color: #fcfcfc;
+    background: #6395b8;
+  }
 }
 @mixin button-color-options {
   color: #fcfcfc;
   background: #bcced9;
-}
-@mixin button-color-options-hover {
-  color: #fcfcfc;
-  background: #6395b8;
-}
-@mixin button-color-options-selected {
-  color: #fcfcfc;
-  background: #304859;
+
+  &:hover {
+    color: #fcfcfc;
+    background: #6395b8;
+  }
+  &.button-active {
+    color: #fcfcfc;
+    background: #304859;
+  }
 }

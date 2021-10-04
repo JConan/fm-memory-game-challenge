@@ -17,14 +17,7 @@
     button {
       @include button-size-normal();
       @include button-color-options();
-
       margin: 5.5px;
-      &:hover {
-        @include button-color-options-hover();
-      }
-      &.button-active {
-        @include button-color-options-selected();
-      }
     }
   }
 }

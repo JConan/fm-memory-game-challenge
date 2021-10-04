@@ -1,0 +1,22 @@
+@import "../../sass/mixins/buttons.scss";
+
+.menu {
+  width: 327px;
+  height: 224px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+
+  button {
+    @include button-size-big();
+    @include button-color-secondary();
+    width: 279px;
+  }
+
+  button:first-child {
+    @include button-color-primary();
+  }
+}

@@ -1,33 +1,40 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Menu } from "./Menu";
+import { ModalMenu } from "./ModalMenu";
 
 describe("component Menu", () => {
   it("should render the layout", () => {
-    render(<Menu />);
+    render(<ModalMenu onClose={() => {}} />);
     screen.getByRole("dialog");
     screen.getByRole("button", { name: /restart/i });
     screen.getByRole("button", { name: /new game/i });
     screen.getByRole("button", { name: /resume game/i });
   });
 
-  it("should be have a callback for restart game", () => {
+  it("should have a callback for closing this dialog", () => {
     const fakeFn = jest.fn();
-    render(<Menu onRestart={fakeFn} />);
+    render(<ModalMenu onClose={fakeFn} />);
+    userEvent.click(screen.getByRole("dialog"));
+    expect(fakeFn).toBeCalledTimes(1);
+  });
+
+  it("should have a callback for restart game", () => {
+    const fakeFn = jest.fn();
+    render(<ModalMenu onClose={() => {}} onRestart={fakeFn} />);
     userEvent.click(screen.getByRole("button", { name: /restart/i }));
     expect(fakeFn).toBeCalledTimes(1);
   });
 
-  it("should be have a callback for new game", () => {
+  it("should have a callback for new game", () => {
     const fakeFn = jest.fn();
-    render(<Menu onNewGame={fakeFn} />);
+    render(<ModalMenu onClose={() => {}} onNewGame={fakeFn} />);
     userEvent.click(screen.getByRole("button", { name: /new/i }));
     expect(fakeFn).toBeCalledTimes(1);
   });
 
-  it("should be have a callback for resume game", () => {
+  it("should have a callback for resume game", () => {
     const fakeFn = jest.fn();
-    render(<Menu onResume={fakeFn} />);
+    render(<ModalMenu onClose={() => {}} onResume={fakeFn} />);
     userEvent.click(screen.getByRole("button", { name: /resume/i }));
     expect(fakeFn).toBeCalledTimes(1);
   });

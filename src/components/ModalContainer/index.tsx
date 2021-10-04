@@ -1,4 +1,5 @@
 import { createPortal } from "react-dom";
+import "./style.scss";
 
 interface ModalProps {
   onClose: () => void;

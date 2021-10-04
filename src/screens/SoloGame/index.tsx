@@ -5,8 +5,11 @@ import { useEffect, useState } from "react";
 import { GameSettings } from "hooks/GameConfig";
 import { useGameCore } from "hooks/GameCore";
 import "./style.scss";
+import { ModalMenu } from "components/ModalMenu";
 
 export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
+  const [showMenu, setShowMenu] = useState(false);
+
   const { isLoaded, tiles, onSelectTile } = useGameCore(setting);
 
   const [iconSet, setIconSet] = useState<JSX.Element[]>(null!);
@@ -23,39 +26,42 @@ export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
   };
 
   return (
-    <div className="screen-container">
-      <header>
-        <span>memory</span>
-        <button>menu</button>
-      </header>
-      <main>
-        <ul aria-label="memory item list">
-          {isLoaded &&
-            tiles.map((tile, idx) => (
-              <li
-                key={idx}
-                aria-label="memory item"
-                onClick={() => onTileClick(tile.id)}
-                className={`tile-${tile.state} tile-size-${setting.gridSize}`}
-              >
-                {tile.state !== "hidden" &&
-                  (setting.theme === "Numbers"
-                    ? tile.value
-                    : iconSet[tile.value])}
-              </li>
-            ))}
-        </ul>
-      </main>
-      <footer>
-        <div role="timer" aria-label="time">
-          <span>Time</span>
-          <span>{timerValue}</span>
-        </div>
-        <div role="status" aria-label="moves">
-          <span>Moves</span>
-          <span>{moveCount}</span>
-        </div>
-      </footer>
-    </div>
+    <>
+      <div className="screen-container">
+        <header>
+          <span>memory</span>
+          <button onClick={() => setShowMenu(true)}>menu</button>
+        </header>
+        <main>
+          <ul aria-label="memory item list">
+            {isLoaded &&
+              tiles.map((tile, idx) => (
+                <li
+                  key={idx}
+                  aria-label="memory item"
+                  onClick={() => onTileClick(tile.id)}
+                  className={`tile-${tile.state} tile-size-${setting.gridSize}`}
+                >
+                  {tile.state !== "hidden" &&
+                    (setting.theme === "Numbers"
+                      ? tile.value
+                      : iconSet[tile.value])}
+                </li>
+              ))}
+          </ul>
+        </main>
+        <footer>
+          <div role="timer" aria-label="time">
+            <span>Time</span>
+            <span>{timerValue}</span>
+          </div>
+          <div role="status" aria-label="moves">
+            <span>Moves</span>
+            <span>{moveCount}</span>
+          </div>
+        </footer>
+      </div>
+      {showMenu && <ModalMenu onClose={() => setShowMenu(false)} />}
+    </>
   );
 };

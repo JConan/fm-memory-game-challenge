@@ -46,4 +46,17 @@ describe("solo game small screen", () => {
       "Moves1"
     );
   });
+
+  it("should show and close Menu when clicked outside", () => {
+    render(<WrappedSoloGame />);
+    const btnMenu = screen.getByRole("button", { name: /menu/i });
+    expect(screen.queryByRole("dialog")).toBeNull();
+
+    userEvent.click(btnMenu);
+
+    const dialogBox = screen.getByRole("dialog");
+    userEvent.click(dialogBox);
+
+    expect(screen.queryByRole("dialog")).toBeNull();
+  });
 });
