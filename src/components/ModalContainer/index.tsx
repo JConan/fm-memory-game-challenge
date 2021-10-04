@@ -7,7 +7,7 @@ interface ModalProps {
 
 export const ModalContainer = ({ onClose, children }: ModalProps) =>
   createPortal(
-    <div className="modal-container" onClick={onClose}>
+    <div role="dialog" className="modal-container" onClick={onClose}>
       {children}
     </div>,
     document.body
