@@ -1,4 +1,5 @@
 import { ModalContainer } from "components/ModalContainer";
+import "./styles.scss";
 
 interface Props {
   elapsedTime?: string;
@@ -16,18 +17,35 @@ export const ModalSoloGameOver = ({
   onNewGame,
 }: Props) => (
   <ModalContainer onClose={() => onClose && onClose()}>
-    <h1>You did it!</h1>
-    <h2>Game over! Here's how you got on...</h2>
-    <label htmlFor="time">Time Elapsed</label>
-    <input type="text" name="time" id="time" defaultValue={elapsedTime} />
-    <label htmlFor="move">Moves Taken</label>
-    <input
-      type="text"
-      name="move"
-      id="move"
-      defaultValue={`${moveCount} Moves`}
-    />
-    <button onClick={() => onRestart && onRestart()}>Restart</button>
-    <button onClick={() => onNewGame && onNewGame()}>Setup New Game</button>
+    <div className="game-over-container">
+      <div>
+        <h1>You did it!</h1>
+        <h2>Game over! Here's how you got on...</h2>
+      </div>
+      <div>
+        <div className="score-container">
+          <label htmlFor="time">Time Elapsed</label>
+          <input
+            type="text"
+            name="time"
+            id="time"
+            disabled={true}
+            defaultValue={elapsedTime}
+          />
+        </div>
+        <div className="score-container">
+          <label htmlFor="move">Moves Taken</label>
+          <input
+            type="text"
+            name="move"
+            id="move"
+            disabled={true}
+            defaultValue={`${moveCount} Moves`}
+          />
+        </div>
+      </div>
+      <button onClick={() => onRestart && onRestart()}>Restart</button>
+      <button onClick={() => onNewGame && onNewGame()}>Setup New Game</button>
+    </div>
   </ModalContainer>
 );
