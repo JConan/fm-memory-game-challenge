@@ -3,6 +3,7 @@ button {
   border: none;
   transition: background-color 90ms ease-out;
   cursor: pointer;
+  user-select: none;
 
   &:hover {
     cursor: pointer;

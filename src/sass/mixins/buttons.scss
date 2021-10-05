@@ -1,14 +1,20 @@
-@mixin button-size-normal {
-  height: 40px;
-  border-radius: 26px;
-  font-size: 16px;
+@import "./utilities.scss";
+
+@mixin button-base {
+  @include text-unselectable();
   font-weight: 700;
+  border-radius: 26px;
+}
+
+@mixin button-size-normal {
+  @include button-base();
+  height: 40px;
+  font-size: 16px;
 }
 @mixin button-size-big {
+  @include button-base();
   height: 48px;
-  border-radius: 26px;
   font-size: 18px;
-  font-weight: 700;
 }
 @mixin button-color-primary {
   color: #fcfcfc;
