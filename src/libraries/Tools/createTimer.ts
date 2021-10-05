@@ -1,24 +1,32 @@
-import { CreateTimer, Timer } from "./types";
+import { CreateTimer } from "./types";
 
 export const createTimer: CreateTimer = ({ tickInterval, onTick }) => {
-  let handle: NodeJS.Timeout | undefined = undefined;
-  let timerRef: Timer = {
+  const dataRef: { intervalHandle?: NodeJS.Timeout; tickCount: number } = {
     tickCount: 0,
-    stop: () => {
-      if (handle) {
-        clearInterval(handle);
-        handle = undefined;
-      }
-    },
-    start: () => {
-      if (handle === undefined) {
-        handle = setInterval(() => {
-          timerRef.tickCount++;
-          onTick && onTick(timerRef.tickCount);
-        }, tickInterval);
-      }
-    },
   };
 
-  return timerRef;
+  const start = () => {
+    if (dataRef.intervalHandle === undefined) {
+      dataRef.intervalHandle = setInterval(() => {
+        dataRef.tickCount++;
+        onTick && onTick(dataRef.tickCount);
+      }, tickInterval);
+    }
+  };
+
+  const stop = () => {
+    dataRef.intervalHandle && clearInterval(dataRef.intervalHandle);
+    dataRef.intervalHandle = undefined;
+  };
+
+  return {
+    getTickCount: () => dataRef.tickCount,
+    start,
+    stop,
+    restart: () => {
+      dataRef.tickCount = 0;
+      stop();
+      start();
+    },
+  };
 };

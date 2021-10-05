@@ -6,9 +6,10 @@ export interface CreateTimerProps {
 }
 
 export interface Timer {
-  tickCount: number;
+  getTickCount: () => number;
   start: () => void;
   stop: () => void;
+  restart: () => void;
 }
 
 export type CreateTimer = (args: CreateTimerProps) => Timer;
