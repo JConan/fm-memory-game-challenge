@@ -144,10 +144,11 @@ describe("hook for GameCore", () => {
 
   it("should have a signal for Game Over and resettable", () => {
     const { result } = initGameCoreHook();
-    expect(result.current.isGameOver).toBe(false);
 
     const sortedTiles = result.current.tiles.sort((a, b) => a.value - b.value);
     sortedTiles.forEach(({ id }) => {
+      expect(result.current.isGameOver).toBe(false);
+
       act(() => {
         result.current.onSelectTile({ id });
       });

@@ -48,16 +48,22 @@ export const useGameCore = ({
           return result ? result : tile;
         });
         setTiles(updatedTiles);
-
-        // check remaining hidden tiles
-        const hiddenTiles = tiles.filter(({ state }) => state === "paired");
-        if (hiddenTiles.length === 0) {
-          setGameOver(true);
-        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDelaying]);
+
+  useEffect(() => {
+    if (tiles) {
+      // check remaining hidden tiles
+      const pairedTiles = tiles.filter(({ state }) => state === "paired");
+      if (pairedTiles.length === (gridSize === "4x4" ? 16 : 36)) {
+        setGameOver(true);
+      }
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tiles]);
 
   // update tile & give a pulse
   const onSelectTile = ({ id }: { id: number }): boolean => {
