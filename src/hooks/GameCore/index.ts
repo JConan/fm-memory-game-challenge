@@ -21,7 +21,7 @@ export const useGameCore = ({
   const [selectedTiles, setSelectedTiles] = useState<TileState[]>([]);
 
   // initialize tiles
-  useInitTiles(gridSize, setTiles, setLoaded);
+  const { reset: resetTiles } = useInitTiles(gridSize, setTiles, setLoaded);
 
   // resolve tiles states after pulse ended
   useEffect(() => {
@@ -68,7 +68,15 @@ export const useGameCore = ({
     }
   };
 
-  return { isLoaded, tiles, onSelectTile };
+  return {
+    isLoaded,
+    tiles,
+    onSelectTile,
+    resetTiles: () => {
+      setSelectedTiles([]);
+      resetTiles();
+    },
+  };
 };
 
 const useInitTiles = (
@@ -76,15 +84,26 @@ const useInitTiles = (
   setTiles: (value: React.SetStateAction<TileState[]>) => void,
   setLoaded: (value: React.SetStateAction<boolean>) => void
 ) => {
-  useEffect(() => {
-    const tileValues = generateTileValues({ gridSize }).map(
-      (value, id) => ({ id, value, state: "hidden" } as TileState)
-    );
+  const [isGenerated, setGenerated] = useState(false);
 
-    setTiles(tileValues);
-    setLoaded(true);
+  useEffect(() => {
+    if (!isGenerated) {
+      const tileValues = generateTileValues({ gridSize }).map(
+        (value, id) => ({ id, value, state: "hidden" } as TileState)
+      );
+
+      setTiles(tileValues);
+      setLoaded(true);
+      setGenerated(true);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isGenerated]);
+
+  const reset = () => {
+    setGenerated(false);
+  };
+  return { reset };
 };
 
 const updateTiles = (

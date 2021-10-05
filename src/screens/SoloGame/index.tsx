@@ -4,25 +4,43 @@ import { Chance } from "chance";
 import { useEffect, useState } from "react";
 import { GameSettings } from "hooks/GameConfig";
 import { useGameCore } from "hooks/GameCore";
-import "./style.scss";
 import { ModalMenu } from "components/ModalMenu";
+import { useHistory } from "react-router";
+import "./style.scss";
 
 export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
-  const [showMenu, setShowMenu] = useState(false);
-
-  const { isLoaded, tiles, onSelectTile } = useGameCore(setting);
-
+  const [isMenuShowned, setShowMenu] = useState(false);
   const [iconSet, setIconSet] = useState<JSX.Element[]>(null!);
-  const { value: timerValue } = useTimer();
   const [moveCount, setMoveCount] = useState(0);
+
+  const { isLoaded, tiles, onSelectTile, resetTiles } = useGameCore(setting);
+  const timer = useTimer();
+  const history = useHistory();
 
   useEffect(() => {
     setIconSet(Chance().shuffle(loadIcons()));
+    timer.start();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onTileClick = (id: number) => {
+  // *-------------*
+  // * actions
+  const selectTile = (id: number) => {
     setMoveCount(moveCount + 1);
     onSelectTile({ id });
+  };
+
+  const hideMenu = () => {
+    setShowMenu(false);
+    timer.start();
+  };
+
+  const resetGame = () => {
+    setMoveCount(0);
+    timer.restart();
+    resetTiles();
+    hideMenu();
   };
 
   return (
@@ -39,7 +57,7 @@ export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
                 <li
                   key={idx}
                   aria-label="memory item"
-                  onClick={() => onTileClick(tile.id)}
+                  onClick={() => selectTile(tile.id)}
                   className={`tile-${tile.state} tile-size-${setting.gridSize}`}
                 >
                   {tile.state !== "hidden" &&
@@ -53,7 +71,7 @@ export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
         <footer>
           <div role="timer" aria-label="time">
             <span>Time</span>
-            <span>{timerValue}</span>
+            <span>{timer.value}</span>
           </div>
           <div role="status" aria-label="moves">
             <span>Moves</span>
@@ -61,7 +79,14 @@ export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
           </div>
         </footer>
       </div>
-      {showMenu && <ModalMenu onClose={() => setShowMenu(false)} />}
+      {isMenuShowned && (
+        <ModalMenu
+          onClose={hideMenu}
+          onResume={hideMenu}
+          onNewGame={() => history.push("/")}
+          onRestart={resetGame}
+        />
+      )}
     </>
   );
 };
