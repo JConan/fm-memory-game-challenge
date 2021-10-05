@@ -163,4 +163,24 @@ describe("solo game small screen", () => {
       "Time0:20"
     );
   });
+
+  it("should count moves only for hidden tiles", () => {
+    render(<WrappedSoloGame />);
+
+    const tiles = screen.getAllByRole("listitem", { name: /memory item/i });
+
+    act(() => {
+      userEvent.click(tiles[0]);
+    });
+    expect(screen.getByRole("status", { name: "moves" })).toHaveTextContent(
+      "Moves1"
+    );
+
+    act(() => {
+      userEvent.click(tiles[0]);
+    });
+    expect(screen.getByRole("status", { name: "moves" })).toHaveTextContent(
+      "Moves1"
+    );
+  });
 });

@@ -7,8 +7,6 @@ describe("hook for GameCore", () => {
     return renderHook(() =>
       useGameCore({
         gridSize: "4x4",
-        numberOfPlayer: "1",
-        theme: "Icons",
         tilesResolutionDelay: 100,
       })
     );
@@ -109,5 +107,38 @@ describe("hook for GameCore", () => {
     });
 
     expect(result.current.tiles[0].state).toBe("selected");
+  });
+
+  it("should return false when trying to select a tile that is not hidden", () => {
+    const { result } = initGameCoreHook();
+
+    const pairOfTiles = () =>
+      result.current.tiles.filter((tile) => tile.value === 7);
+
+    act(() => {
+      expect(result.current.onSelectTile({ id: pairOfTiles()[0].id })).toBe(
+        true
+      );
+    });
+    act(() => {
+      expect(result.current.onSelectTile({ id: pairOfTiles()[0].id })).toBe(
+        false
+      );
+    });
+    act(() => {
+      expect(result.current.onSelectTile({ id: pairOfTiles()[1].id })).toBe(
+        true
+      );
+    });
+    act(() => {
+      jest.advanceTimersByTime(10000);
+    });
+
+    expect(pairOfTiles()[0].state).toBe("paired");
+    act(() => {
+      expect(result.current.onSelectTile({ id: pairOfTiles()[0].id })).toBe(
+        false
+      );
+    });
   });
 });

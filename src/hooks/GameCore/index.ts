@@ -14,7 +14,7 @@ export interface TileState {
 export const useGameCore = ({
   gridSize,
   tilesResolutionDelay: delay,
-}: GameSettings) => {
+}: Pick<GameSettings, "gridSize" | "tilesResolutionDelay">) => {
   const { state: isDelaying, pulse } = useDelayFlipFlop({ delay });
   const [isLoaded, setLoaded] = useState(false);
   const [tiles, setTiles] = useState<TileState[]>(undefined!);
@@ -53,8 +53,8 @@ export const useGameCore = ({
   }, [isDelaying]);
 
   // update tile & give a pulse
-  const onSelectTile = ({ id }: { id: number }) => {
-    if (findTilesBy(selectedTiles, { id }).length !== 0) return;
+  const onSelectTile = ({ id }: { id: number }): boolean => {
+    if (findTilesBy(selectedTiles, { id }).length !== 0) return false;
 
     if (isLoaded && selectedTiles.length < 2) {
       const selectedTile = findTilesBy(tiles, { id })[0];
@@ -64,8 +64,10 @@ export const useGameCore = ({
         updatedTiles.sort((a, b) => a.id - b.id);
         setTiles(updatedTiles);
         pulse();
+        return true;
       }
     }
+    return false;
   };
 
   return {

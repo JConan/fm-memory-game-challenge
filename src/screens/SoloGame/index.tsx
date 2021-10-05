@@ -27,8 +27,7 @@ export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
   // *-------------*
   // * actions
   const selectTile = (id: number) => {
-    setMoveCount(moveCount + 1);
-    onSelectTile({ id });
+    onSelectTile({ id }) && setMoveCount(moveCount + 1);
   };
 
   const showMenu = () => {
