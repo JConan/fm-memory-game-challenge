@@ -141,4 +141,29 @@ describe("hook for GameCore", () => {
       );
     });
   });
+
+  it("should have a signal for Game Over and resettable", () => {
+    const { result } = initGameCoreHook();
+    expect(result.current.isGameOver).toBe(false);
+
+    const sortedTiles = result.current.tiles.sort((a, b) => a.value - b.value);
+    sortedTiles.forEach(({ id }) => {
+      act(() => {
+        result.current.onSelectTile({ id });
+      });
+      act(() => {
+        jest.advanceTimersByTime(1000);
+      });
+    });
+
+    result.current.tiles.forEach(({ state }) => {
+      expect(state).toBe("paired");
+    });
+    expect(result.current.isGameOver).toBe(true);
+
+    act(() => {
+      result.current.restartGame();
+    });
+    expect(result.current.isGameOver).toBe(false);
+  });
 });

@@ -13,7 +13,12 @@ export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
   const [iconSet, setIconSet] = useState<JSX.Element[]>(null!);
   const [moveCount, setMoveCount] = useState(0);
 
-  const { isLoaded, tiles, onSelectTile, resetTiles } = useGameCore(setting);
+  const {
+    isLoaded,
+    tiles,
+    onSelectTile,
+    restartGame: resetTiles,
+  } = useGameCore(setting);
   const timer = useTimer();
   const history = useHistory();
 

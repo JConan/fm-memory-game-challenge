@@ -17,6 +17,7 @@ export const useGameCore = ({
 }: Pick<GameSettings, "gridSize" | "tilesResolutionDelay">) => {
   const { state: isDelaying, pulse } = useDelayFlipFlop({ delay });
   const [isLoaded, setLoaded] = useState(false);
+  const [isGameOver, setGameOver] = useState(false);
   const [tiles, setTiles] = useState<TileState[]>(undefined!);
   const [selectedTiles, setSelectedTiles] = useState<TileState[]>([]);
 
@@ -47,6 +48,12 @@ export const useGameCore = ({
           return result ? result : tile;
         });
         setTiles(updatedTiles);
+
+        // check remaining hidden tiles
+        const hiddenTiles = tiles.filter(({ state }) => state === "paired");
+        if (hiddenTiles.length === 0) {
+          setGameOver(true);
+        }
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -71,12 +78,14 @@ export const useGameCore = ({
   };
 
   return {
+    isGameOver,
     isLoaded,
     tiles,
     onSelectTile,
-    resetTiles: () => {
+    restartGame: () => {
       setSelectedTiles([]);
       resetTiles();
+      setGameOver(false);
     },
   };
 };
