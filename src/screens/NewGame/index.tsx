@@ -3,7 +3,7 @@ import { GameConfig } from "hooks/GameConfig";
 import { SelectOptions } from "components/SelectOptions";
 import "./style.scss";
 
-export const GameStart: React.FC<{ state: GameConfig }> = ({ state }) => {
+export const NewGame: React.FC<{ state: GameConfig }> = ({ state }) => {
   return (
     <div className="screen-start-container">
       <span className="title">memory</span>
@@ -28,11 +28,7 @@ export const GameStart: React.FC<{ state: GameConfig }> = ({ state }) => {
           selected={state.gridSize}
           onSelect={(value) => state.setGridSize(value)}
         />
-        <Link
-          to={`/game/${state.numberOfPlayer === "1" ? "solo" : "multi"}/${
-            state.gridSize
-          }`}
-        >
+        <Link to={`/${state.numberOfPlayer === "1" ? "solo" : "multi"}`}>
           <button className="button-navigation">start game</button>
         </Link>
       </div>

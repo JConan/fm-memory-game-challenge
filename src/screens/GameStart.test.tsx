@@ -2,7 +2,7 @@ import userEvent from "@testing-library/user-event";
 import { useLocation, MemoryRouter } from "react-router";
 import { render, screen } from "@testing-library/react";
 import { Location } from "history";
-import { GameStart } from "./GameStart";
+import { NewGame } from "./NewGame";
 import { GameConfig, useGameConfig } from "hooks/GameConfig";
 
 describe("start game screen", () => {
@@ -12,7 +12,7 @@ describe("start game screen", () => {
   const WrappedApp = () => {
     gameState = useGameConfig();
     location = useLocation();
-    return <GameStart state={gameState} />;
+    return <NewGame state={gameState} />;
   };
 
   beforeEach(() => {
@@ -82,7 +82,8 @@ describe("start game screen", () => {
   it("should be able to start a game of size 4x4", () => {
     const btnStart = screen.getByRole("button", { name: /^start game$/i });
     userEvent.click(btnStart);
-    expect(location.pathname).toBe("/game/solo/4x4");
+    expect(location.pathname).toBe("/solo");
+    expect(gameState.gridSize).toBe("4x4");
   });
 
   it("should be able to start a game of size 4x4 multiplayer", () => {
@@ -90,7 +91,8 @@ describe("start game screen", () => {
     const btnStart = screen.getByRole("button", { name: /^start game$/i });
     userEvent.click(btnMulti);
     userEvent.click(btnStart);
-    expect(location.pathname).toBe("/game/multi/4x4");
+    expect(location.pathname).toBe("/multi");
+    expect(gameState.gridSize).toBe("4x4");
   });
 
   it("should be able to start a game of size 6x6", () => {
@@ -98,6 +100,7 @@ describe("start game screen", () => {
     const btnStart = screen.getByRole("button", { name: /^start game$/i });
     userEvent.click(btn6x6);
     userEvent.click(btnStart);
-    expect(location.pathname).toBe("/game/solo/6x6");
+    expect(location.pathname).toBe("/solo");
+    expect(gameState.gridSize).toBe("6x6");
   });
 });
