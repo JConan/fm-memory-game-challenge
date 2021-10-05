@@ -62,6 +62,8 @@ I also needed some sort of "time-based flip-flop switch" in order to delay the r
 - jest.useFakeTimers
 - jest.advanceTimersByTime
 
+Hooks useRef where really usefull because I need to work with the same timer instance when displaying the Menu or restarting the game.
+
 ### Continued development
 
 > _[TODO]_
