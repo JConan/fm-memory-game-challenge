@@ -24,6 +24,13 @@ describe("solo game small screen", () => {
     );
   };
 
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+  afterEach(() => {
+    jest.useRealTimers();
+  });
+
   it("should have build layout for 4x4 grid", () => {
     render(<WrappedSoloGame />);
     screen.getByText(/memory/i);
@@ -95,7 +102,6 @@ describe("solo game small screen", () => {
   });
 
   it("should reset the game after clicked on the restart button from menu", () => {
-    jest.useFakeTimers();
     render(<WrappedSoloGame />);
 
     // make some moves and advance time
@@ -130,7 +136,31 @@ describe("solo game small screen", () => {
     screen.getAllByRole("listitem").forEach((tile) => {
       expect(tile).toHaveClass("tile-hidden");
     });
+  });
 
-    jest.useRealTimers();
+  it("should not increment the timer when displaying Menu and resume when closed", () => {
+    render(<WrappedSoloGame />);
+    act(() => {
+      jest.advanceTimersByTime(10000);
+    });
+    expect(screen.getByRole("timer", { name: /time/i })).toHaveTextContent(
+      "Time0:10"
+    );
+    userEvent.click(screen.getByRole("button", { name: /menu/i }));
+
+    act(() => {
+      jest.advanceTimersByTime(10000);
+    });
+    expect(screen.getByRole("timer", { name: /time/i })).toHaveTextContent(
+      "Time0:10"
+    );
+
+    userEvent.click(screen.getByRole("dialog"));
+    act(() => {
+      jest.advanceTimersByTime(10000);
+    });
+    expect(screen.getByRole("timer", { name: /time/i })).toHaveTextContent(
+      "Time0:20"
+    );
   });
 });

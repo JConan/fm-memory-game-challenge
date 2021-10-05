@@ -31,6 +31,11 @@ export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
     onSelectTile({ id });
   };
 
+  const showMenu = () => {
+    setShowMenu(true);
+    timer.stop();
+  };
+
   const hideMenu = () => {
     setShowMenu(false);
     timer.start();
@@ -48,7 +53,7 @@ export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
       <div className="screen-container">
         <header>
           <span>memory</span>
-          <button onClick={() => setShowMenu(true)}>menu</button>
+          <button onClick={showMenu}>menu</button>
         </header>
         <main>
           <ul aria-label="memory item list">
