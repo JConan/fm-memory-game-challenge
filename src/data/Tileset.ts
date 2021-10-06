@@ -11,8 +11,8 @@ export interface TileState {
 
 export interface Tileset {
   getTiles: () => TileState[];
-  selectTile: (props: { id: number }) => boolean;
-  checkSelected: () => boolean;
+  selectTile: (props: { id: number }) => Promise<TileState[]>;
+  checkSelected: () => Promise<TileState[]>;
   isAllTilesPaired: () => boolean;
 }
 
@@ -30,19 +30,18 @@ export class Tileset {
 
     this.getTiles = () => this.tiles.map((tile) => ({ ...tile }));
 
-    this.selectTile = ({ id }) => {
+    this.selectTile = async ({ id }) => {
       const selectIds = this.getSelectedTiles().map(({ id }) => id);
 
       if (!selectIds.includes(id) && selectIds.length < 2) {
-        this.tiles = this.tiles.map((tile) =>
-          tile.id === id ? { ...tile, state: "selected" } : tile
+        this.tiles.forEach(
+          (tile) => tile.id === id && (tile.state = "selected")
         );
-        return true;
       }
-      return false;
+      return this.getTiles();
     };
 
-    this.checkSelected = () => {
+    this.checkSelected = async () => {
       const selectedTiles = this.getSelectedTiles();
       if (selectedTiles.length === 2) {
         const state =
@@ -51,12 +50,11 @@ export class Tileset {
             : "hidden";
 
         const ids = selectedTiles.map(({ id }) => id);
-        this.tiles = this.tiles.map((tile) =>
-          ids.includes(tile.id) ? { ...tile, state } : tile
+        this.tiles.forEach(
+          (tile) => ids.includes(tile.id) && (tile.state = state)
         );
-        return true;
       }
-      return false;
+      return this.getTiles();
     };
 
     this.isAllTilesPaired = () =>
