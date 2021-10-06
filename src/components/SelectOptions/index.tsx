@@ -1,7 +1,7 @@
 import { SelectOptionsProps } from "./types";
 import "./style.scss";
 
-export const SelectOptions = <V extends Readonly<string[]>>({
+export const SelectOptions = <V extends Readonly<string[] | number[]>>({
   label,
   values,
   selected,

@@ -2,22 +2,24 @@ import userEvent from "@testing-library/user-event";
 import { useLocation, MemoryRouter } from "react-router";
 import { render, screen } from "@testing-library/react";
 import { Location } from "history";
-import { NewGame } from "./NewGame";
-import { GameConfig, useGameConfig } from "hooks/GameConfig";
+import { GameSettingScreen } from "./GameSetting";
+import { GameSetting } from "data";
+import { act } from "react-dom/test-utils";
+import { useRef } from "react";
 
 describe("start game screen", () => {
-  let gameState: GameConfig;
-  let location: Location;
+  let gameSetting: React.MutableRefObject<GameSetting> = undefined!;
+  let location: Location = undefined!;
 
   const WrappedApp = () => {
-    gameState = useGameConfig();
+    gameSetting = useRef(new GameSetting());
     location = useLocation();
-    return <NewGame state={gameState} />;
+    return <GameSettingScreen gameSetting={gameSetting.current} />;
   };
 
   beforeEach(() => {
     render(
-      <MemoryRouter initialEntries={["/start"]}>
+      <MemoryRouter initialEntries={["/new"]}>
         <WrappedApp />
       </MemoryRouter>
     );
@@ -26,81 +28,101 @@ describe("start game screen", () => {
     screen.getByText(/^memory$/i);
   });
 
-  it("should be able to choose theme", () => {
+  it("should be able to choose theme", async () => {
     screen.getByText(/^select theme$/i);
     const btnNumbers = screen.getByRole("button", { name: /^numbers$/i });
     const btnIcons = screen.getByRole("button", { name: /^icons$/i });
 
-    expect(gameState).toHaveProperty("theme", "Numbers");
+    expect(gameSetting.current.getSetting().theme).toBe("Numbers");
     expect(btnNumbers).toHaveClass("button-active");
     expect(btnIcons).not.toHaveClass("button-active");
 
-    userEvent.click(btnIcons);
-    expect(gameState).toHaveProperty("theme", "Icons");
+    await act(async () => {
+      await userEvent.click(btnIcons);
+    });
+
+    expect(gameSetting.current.getSetting().theme).toBe("Icons");
     expect(btnNumbers).not.toHaveClass("button-active");
     expect(btnIcons).toHaveClass("button-active");
 
-    userEvent.click(btnNumbers);
-    expect(gameState).toHaveProperty("theme", "Numbers");
+    await act(async () => {
+      await userEvent.click(btnNumbers);
+    });
+    expect(gameSetting.current.getSetting().theme).toBe("Numbers");
   });
 
-  it("should be able to choose grid size", () => {
+  it("should be able to choose grid size", async () => {
     screen.getByText(/^Grid Size$/i);
-    expect(gameState).toHaveProperty("gridSize", "4x4");
+    expect(gameSetting.current.getSetting()).toHaveProperty("gridSize", "4x4");
 
     const btn4x4 = screen.getByRole("button", { name: /^4x4$/i });
     const btn6x6 = screen.getByRole("button", { name: /^6x6$/i });
 
-    userEvent.click(btn6x6);
-    expect(gameState).toHaveProperty("gridSize", "6x6");
+    await act(async () => {
+      await userEvent.click(btn6x6);
+    });
+
+    expect(gameSetting.current.getSetting().gridSize).toBe("6x6");
     expect(btn6x6).toHaveClass("button-active");
     expect(btn4x4).not.toHaveClass("button-active");
 
-    userEvent.click(btn4x4);
-    expect(gameState).toHaveProperty("gridSize", "4x4");
+    await act(async () => {
+      await userEvent.click(btn4x4);
+    });
+    expect(gameSetting.current.getSetting().gridSize).toBe("4x4");
     expect(btn4x4).toHaveClass("button-active");
     expect(btn6x6).not.toHaveClass("button-active");
   });
 
-  it("should be able to choose numbers of players", () => {
+  it("should be able to choose numbers of players", async () => {
     screen.getByText(/^numbers of players$/i);
     const buttons = ["1", "2", "3", "4"].map((number) =>
       screen.getByRole("button", { name: number })
     );
+    expect(gameSetting.current.getSetting().numberOfPlayers).toBe(1);
     expect(buttons[0]).toHaveClass("button-active");
     expect(buttons[1]).not.toHaveClass("button-active");
     expect(buttons[2]).not.toHaveClass("button-active");
     expect(buttons[3]).not.toHaveClass("button-active");
 
-    userEvent.click(buttons[3]);
+    await act(async () => {
+      await userEvent.click(buttons[3]);
+    });
+    expect(gameSetting.current.getSetting().numberOfPlayers).toBe(4);
     expect(buttons[0]).not.toHaveClass("button-active");
     expect(buttons[1]).not.toHaveClass("button-active");
     expect(buttons[2]).not.toHaveClass("button-active");
     expect(buttons[3]).toHaveClass("button-active");
   });
 
-  it("should be able to start a game of size 4x4", () => {
+  it("should be able to start a game of size 4x4", async () => {
     const btnStart = screen.getByRole("button", { name: /^start game$/i });
-    userEvent.click(btnStart);
+    await act(async () => {
+      await userEvent.click(btnStart);
+    });
     expect(location.pathname).toBe("/solo");
-    expect(gameState.gridSize).toBe("4x4");
+    expect(gameSetting.current.getSetting().gridSize).toBe("4x4");
   });
 
-  it("should be able to start a game of size 4x4 multiplayer", () => {
+  it("should be able to start a game of size 4x4 multiplayer", async () => {
     const btnMulti = screen.getByRole("button", { name: "2" });
     const btnStart = screen.getByRole("button", { name: /^start game$/i });
-    userEvent.click(btnMulti);
-    userEvent.click(btnStart);
+    await act(async () => {
+      await userEvent.click(btnMulti);
+      await userEvent.click(btnStart);
+    });
     expect(location.pathname).toBe("/multi");
-    expect(gameState.gridSize).toBe("4x4");
+    expect(gameSetting.current.getSetting().numberOfPlayers).toBe(2);
   });
 
-  it("should be able to start a game of size 6x6", () => {
+  it("should be able to start a game of size 6x6", async () => {
     const btn6x6 = screen.getByRole("button", { name: /^6x6$/i });
     const btnStart = screen.getByRole("button", { name: /^start game$/i });
-    userEvent.click(btn6x6);
-    userEvent.click(btnStart);
+    await act(async () => {
+      await userEvent.click(btn6x6);
+      await userEvent.click(btnStart);
+    });
     expect(location.pathname).toBe("/solo");
-    expect(gameState.gridSize).toBe("6x6");
+    expect(gameSetting.current.getSetting().gridSize).toBe("6x6");
   });
 });

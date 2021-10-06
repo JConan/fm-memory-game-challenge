@@ -1,7 +1,7 @@
 @import "../../sass/mixins/containers.scss";
 @import "../../sass/mixins/buttons.scss";
 
-.screen-start-container {
+.game-setting {
   @include fullscreen-container();
   background-color: #152938;
   color: white;
