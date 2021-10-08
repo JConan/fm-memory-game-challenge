@@ -142,6 +142,34 @@ describe("hook for GameCore", () => {
     });
   });
 
+  it("should not be able to selected an already paired tiles", async () => {
+    const { result, waitForNextUpdate } = initGameCoreHook();
+
+    const sortedTiles = () =>
+      [...result.current.tiles].sort((a, b) => a.value - b.value);
+
+    await act(async () => {
+      result.current.onSelectTile({ id: sortedTiles()[0].id });
+      await waitForNextUpdate();
+      result.current.onSelectTile({ id: sortedTiles()[1].id });
+      jest.advanceTimersByTime(animationDelay);
+    });
+
+    expect(sortedTiles()[0].state).toBe("paired");
+    expect(sortedTiles()[1].state).toBe("paired");
+
+    await act(async () => {
+      result.current.onSelectTile({ id: sortedTiles()[2].id });
+      await waitForNextUpdate();
+      result.current.onSelectTile({ id: sortedTiles()[0].id });
+      result.current.onSelectTile({ id: sortedTiles()[3].id });
+      jest.advanceTimersByTime(animationDelay);
+    });
+
+    expect(sortedTiles()[2].state).toBe("paired");
+    expect(sortedTiles()[3].state).toBe("paired");
+  });
+
   it("should have a signal for Game Over and resettable", () => {
     const { result } = initGameCoreHook();
 

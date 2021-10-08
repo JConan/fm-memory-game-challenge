@@ -68,8 +68,8 @@ export const useGameCore = ({ gridSize }: Pick<Setting, "gridSize">) => {
 
     if (isLoaded && selectedTiles.length < 2) {
       const selectedTile = findTilesBy(tiles, { id })[0];
-      setSelectedTiles([...selectedTiles, selectedTile]);
       if (selectedTile.state === "hidden") {
+        setSelectedTiles([...selectedTiles, selectedTile]);
         const updatedTiles = updateTiles(tiles, [selectedTile], "selected");
         updatedTiles.sort((a, b) => a.id - b.id);
         setTiles(updatedTiles);
