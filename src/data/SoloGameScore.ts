@@ -1,4 +1,4 @@
-import { Timer, createTimer } from "libraries/Tools";
+import { Timer, createTimer } from "../libraries/Tools";
 
 export interface SoloGameScore {
   move: {

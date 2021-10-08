@@ -1,4 +1,4 @@
-import { ModalContainer } from "components/ModalContainer";
+import { ModalContainer } from "../ModalContainer";
 import "./style.scss";
 
 interface ModalMenuProps {

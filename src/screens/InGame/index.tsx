@@ -1,11 +1,11 @@
-import { useTimer } from "hooks/useTimer";
-import { loadIcons } from "components/TileIcons";
 import { Chance } from "chance";
-import { useEffect, useState } from "react";
-import { GameSetting } from "hooks/useGameSetting";
-import { useGameCore } from "hooks/useGameCore";
-import { ModalMenu } from "components/ModalMenu";
 import { useHistory } from "react-router";
+import { useEffect, useState } from "react";
+import { useTimer } from "../../hooks/useTimer";
+import { loadIcons } from "../../components/TileIcons";
+import { GameSetting } from "../../hooks/useGameSetting";
+import { useGameCore } from "../../hooks/useGameCore";
+import { ModalMenu } from "../../components/ModalMenu";
 import "./style.scss";
 
 export const InGame: React.FC<{ setting: GameSetting }> = ({

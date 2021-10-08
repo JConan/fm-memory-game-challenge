@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { createTimer, Timer } from "libraries/Tools";
+import { createTimer, Timer } from "../../libraries/Tools";
 import { UseTimer } from "./types";
 
 export const useTimer: UseTimer = () => {

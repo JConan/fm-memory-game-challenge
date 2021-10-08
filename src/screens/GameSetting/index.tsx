@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { GameSetting } from "hooks/useGameSetting";
-import { SelectOptions } from "components/SelectOptions";
+import { GameSetting } from "../../hooks/useGameSetting";
+import { SelectOptions } from "../../components/SelectOptions";
 import "./style.scss";
 
 export const GameSettingScreen: React.FC<{ gameSetting: GameSetting }> = ({

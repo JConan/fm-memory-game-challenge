@@ -1,6 +1,6 @@
-import { GridSize, Setting } from "hooks/useGameSetting";
-import { useDelayedSignal } from "hooks/useDelayedSignal";
-import { generateTileValues } from "libraries/Tools";
+import { GridSize, Setting } from "../../hooks/useGameSetting";
+import { useDelayedSignal } from "../../hooks/useDelayedSignal";
+import { generateTileValues } from "../../libraries/Tools";
 import { useEffect, useState } from "react";
 
 export type TyleState = "hidden" | "selected" | "paired";

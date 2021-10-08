@@ -1,5 +1,5 @@
-import { GridSize } from "hooks/useGameSetting";
-import { generateTileValues } from "libraries/Tools";
+import { GridSize } from "../hooks/useGameSetting";
+import { generateTileValues } from "../libraries/Tools";
 
 export type TyleState = "hidden" | "selected" | "paired";
 

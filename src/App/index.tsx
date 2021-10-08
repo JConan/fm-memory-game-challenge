@@ -1,8 +1,8 @@
-import { useGameSetting } from "hooks/useGameSetting";
+import { useGameSetting } from "../hooks/useGameSetting";
 import { useEffect, useState } from "react";
 import { Route, Switch, Redirect, useHistory } from "react-router";
-import { GameSettingScreen } from "screens/GameSetting";
-import { InGame } from "screens/InGame";
+import { GameSettingScreen } from "../screens/GameSetting";
+import { InGame } from "../screens/InGame";
 import "./style.scss";
 
 export const App = () => {
