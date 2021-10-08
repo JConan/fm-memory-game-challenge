@@ -1,4 +1,4 @@
-import { GameGridSize, GameSettings } from "hooks/GameConfig";
+import { GridSize, Setting } from "hooks/GameSetting";
 import { useDelayFlipFlop } from "hooks/DelayFlipFlop";
 import { generateTileValues } from "libraries/Tools";
 import { useEffect, useState } from "react";
@@ -11,11 +11,8 @@ export interface TileState {
   state: TyleState;
 }
 
-export const useGameCore = ({
-  gridSize,
-  tilesResolutionDelay: delay,
-}: Pick<GameSettings, "gridSize" | "tilesResolutionDelay">) => {
-  const { state: isDelaying, pulse } = useDelayFlipFlop({ delay });
+export const useGameCore = ({ gridSize }: Pick<Setting, "gridSize">) => {
+  const { state: isDelaying, pulse } = useDelayFlipFlop({ delay: 650 });
   const [isLoaded, setLoaded] = useState(false);
   const [isGameOver, setGameOver] = useState(false);
   const [tiles, setTiles] = useState<TileState[]>(undefined!);
@@ -97,7 +94,7 @@ export const useGameCore = ({
 };
 
 const useInitTiles = (
-  gridSize: GameGridSize,
+  gridSize: GridSize,
   setTiles: (value: React.SetStateAction<TileState[]>) => void,
   setLoaded: (value: React.SetStateAction<boolean>) => void
 ) => {

@@ -3,11 +3,11 @@ import { act } from "react-dom/test-utils";
 import { TileState, useGameCore } from "./GameCore";
 
 describe("hook for GameCore", () => {
+  const animationDelay = 650;
   const initGameCoreHook = () => {
     return renderHook(() =>
       useGameCore({
         gridSize: "4x4",
-        tilesResolutionDelay: 100,
       })
     );
   };
@@ -65,7 +65,7 @@ describe("hook for GameCore", () => {
     expect(secondTile().state).toEqual("selected");
 
     act(() => {
-      jest.advanceTimersByTime(100);
+      jest.advanceTimersByTime(animationDelay);
     });
     expect(firstTile().state).toEqual("hidden");
     expect(secondTile().state).toEqual("hidden");
@@ -88,7 +88,7 @@ describe("hook for GameCore", () => {
     expect(pairOfTiles()[1].state).toBe("selected");
 
     act(() => {
-      jest.advanceTimersByTime(100);
+      jest.advanceTimersByTime(animationDelay);
     });
     expect(pairOfTiles()[0].state).toBe("paired");
     expect(pairOfTiles()[1].state).toBe("paired");
@@ -103,7 +103,7 @@ describe("hook for GameCore", () => {
       });
     });
     act(() => {
-      jest.advanceTimersByTime(100);
+      jest.advanceTimersByTime(animationDelay);
     });
 
     expect(result.current.tiles[0].state).toBe("selected");
@@ -131,7 +131,7 @@ describe("hook for GameCore", () => {
       );
     });
     act(() => {
-      jest.advanceTimersByTime(10000);
+      jest.advanceTimersByTime(100 * animationDelay);
     });
 
     expect(pairOfTiles()[0].state).toBe("paired");
@@ -153,7 +153,7 @@ describe("hook for GameCore", () => {
         result.current.onSelectTile({ id });
       });
       act(() => {
-        jest.advanceTimersByTime(1000);
+        jest.advanceTimersByTime(10 * animationDelay);
       });
     });
 

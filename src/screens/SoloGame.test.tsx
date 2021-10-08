@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { GameSettings, useGameConfig } from "hooks/GameConfig";
+import { Setting, useGameSetting } from "hooks/GameSetting";
+
 import { act } from "react-dom/test-utils";
 import { SoloGame } from "./SoloGame";
 import { MemoryRouter, useLocation } from "react-router-dom";
@@ -9,12 +10,19 @@ import { Location } from "history";
 describe("solo game small screen", () => {
   let location: Location | undefined = undefined;
 
-  const WrappedSoloGame = (settings: Partial<GameSettings>) => {
-    const state = useGameConfig();
+  const WrappedSoloGame = (settings: Partial<Setting>) => {
+    const gameSetting = useGameSetting();
 
     const Game = () => {
       location = useLocation();
-      return <SoloGame setting={{ ...state, ...settings }} />;
+      return (
+        <SoloGame
+          setting={{
+            ...gameSetting,
+            value: { ...gameSetting.value, ...settings },
+          }}
+        />
+      );
     };
 
     return (

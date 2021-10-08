@@ -1,21 +1,11 @@
-import { useGameSetting, GameSetting } from "hooks/GameSetting";
+import { useGameSetting } from "hooks/GameSetting";
 import { useEffect, useState } from "react";
-import { Route, Switch, Redirect } from "react-router";
+import { Route, Switch, Redirect, useHistory } from "react-router";
 import { GameSettingScreen } from "screens/GameSetting";
+import { SoloGame } from "screens/SoloGame";
 import "./style.scss";
 
-const TestScreen: React.FC<{ gameSetting: GameSetting }> = ({
-  gameSetting,
-}) => {
-  useEffect(() => {
-    console.log(gameSetting.value);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  return <></>;
-};
-
-export const GameApp = () => {
+export const App = () => {
   const [isLoaded, setLoaded] = useState(false);
   const gameSetting = useGameSetting();
 
@@ -24,6 +14,8 @@ export const GameApp = () => {
     setLoaded(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const history = useHistory();
 
   return (
     <>
@@ -35,10 +27,17 @@ export const GameApp = () => {
               <GameSettingScreen gameSetting={gameSetting} />
             </Route>
             <Route path="/solo">
-              <TestScreen gameSetting={gameSetting} />
+              <SoloGame setting={gameSetting} />
             </Route>
             <Route path="/multi">
-              <TestScreen gameSetting={gameSetting} />
+              <div>To Be implemented</div>
+              <button
+                onClick={() => {
+                  history.goBack();
+                }}
+              >
+                back
+              </button>
             </Route>
             <Redirect to="/setting" />
           </Switch>

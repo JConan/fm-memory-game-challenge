@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { GameApp } from "./GameApp";
+import { App } from "./App";
 
 describe("GameApp main component", () => {
   it("should render initial screen", () => {
     render(
       <MemoryRouter>
-        <GameApp />
+        <App />
       </MemoryRouter>
     );
     screen.getByText(/memory/i);

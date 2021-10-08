@@ -2,13 +2,15 @@ import { useTimer } from "hooks/Timer";
 import { loadIcons } from "components/TileIcons";
 import { Chance } from "chance";
 import { useEffect, useState } from "react";
-import { GameSettings } from "hooks/GameConfig";
+import { GameSetting } from "hooks/GameSetting";
 import { useGameCore } from "hooks/GameCore";
 import { ModalMenu } from "components/ModalMenu";
 import { useHistory } from "react-router";
 import "./style.scss";
 
-export const SoloGame: React.FC<{ setting: GameSettings }> = ({ setting }) => {
+export const SoloGame: React.FC<{ setting: GameSetting }> = ({
+  setting: { value: setting },
+}) => {
   const [isMenuShowned, setShowMenu] = useState(false);
   const [iconSet, setIconSet] = useState<JSX.Element[]>(null!);
   const [moveCount, setMoveCount] = useState(0);
