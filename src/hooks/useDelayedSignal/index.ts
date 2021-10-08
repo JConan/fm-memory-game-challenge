@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 
-interface useDelayFlipFlopProps {
+interface useDelayedSignalProps {
   delay?: number;
 }
 
-type UseDelayFlipFlop = (props?: useDelayFlipFlopProps) => {
+type UseDelayedSignal = (props?: useDelayedSignalProps) => {
   state: boolean;
   pulse: () => void;
 };
 
-const defaultProps: useDelayFlipFlopProps = { delay: 100 };
+const defaultProps: useDelayedSignalProps = { delay: 100 };
 
-export const useDelayFlipFlop: UseDelayFlipFlop = ({
+export const useDelayedSignal: UseDelayedSignal = ({
   delay,
 } = defaultProps) => {
   const isMounted = useRef(true);

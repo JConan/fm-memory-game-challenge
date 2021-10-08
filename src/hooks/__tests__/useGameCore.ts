@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
-import { TileState, useGameCore } from "../GameCore";
+import { TileState, useGameCore } from "../useGameCore";
 
 describe("hook for GameCore", () => {
   const animationDelay = 650;

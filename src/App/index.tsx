@@ -1,4 +1,4 @@
-import { useGameSetting } from "hooks/GameSetting";
+import { useGameSetting } from "hooks/useGameSetting";
 import { useEffect, useState } from "react";
 import { Route, Switch, Redirect, useHistory } from "react-router";
 import { GameSettingScreen } from "screens/GameSetting";

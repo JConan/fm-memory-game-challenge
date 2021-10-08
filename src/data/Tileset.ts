@@ -1,4 +1,4 @@
-import { GridSize } from "hooks/GameSetting";
+import { GridSize } from "hooks/useGameSetting";
 import { generateTileValues } from "libraries/Tools";
 
 export type TyleState = "hidden" | "selected" | "paired";
@@ -68,5 +68,3 @@ export class Tileset {
   private getSelectedTiles = () =>
     this.getTiles().filter((tile) => tile.state === "selected");
 }
-
-export type { GridSize } from "hooks/GameSetting";

@@ -1,5 +1,5 @@
 import { Chance } from "chance";
-import { GridSize } from "hooks/GameSetting";
+import { GridSize } from "hooks/useGameSetting";
 import { generateTileValues } from "../generateTileValues";
 
 describe("generate values used by the tiles in the memory games", () => {

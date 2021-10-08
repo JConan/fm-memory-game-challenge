@@ -29,5 +29,3 @@ export class SoloGameScore {
     };
   }
 }
-
-export type { Timer } from "libraries/Tools";

@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import { Location } from "history";
 import { GameSettingScreen } from "./GameSetting";
 import { act } from "react-dom/test-utils";
-import { useGameSetting, GameSetting } from "hooks/GameSetting";
+import { useGameSetting, GameSetting } from "hooks/useGameSetting";
 
 describe("start game screen", () => {
   let gameSetting: GameSetting = undefined!;

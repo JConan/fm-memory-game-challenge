@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
-import { useDelayFlipFlop } from "../DelayFlipFlop";
+import { useDelayedSignal } from "../useDelayedSignal";
 
 describe("hook for DelayFlipFlop", () => {
   beforeEach(() => {
@@ -12,7 +12,7 @@ describe("hook for DelayFlipFlop", () => {
   });
 
   it("should have to change state after single pulse", () => {
-    const { result } = renderHook(() => useDelayFlipFlop());
+    const { result } = renderHook(() => useDelayedSignal());
     expect(result.current.state).toBe(false);
 
     act(() => {
@@ -22,7 +22,7 @@ describe("hook for DelayFlipFlop", () => {
   });
 
   it("should have state back to false after 100ms since last pulse", () => {
-    const { result } = renderHook(() => useDelayFlipFlop());
+    const { result } = renderHook(() => useDelayedSignal());
 
     act(() => {
       result.current.pulse();
@@ -33,7 +33,7 @@ describe("hook for DelayFlipFlop", () => {
 
   it("should have be able to override default delay of 100ms", () => {
     const { result } = renderHook(() =>
-      useDelayFlipFlop({
+      useDelayedSignal({
         delay: 300,
       })
     );
@@ -51,7 +51,7 @@ describe("hook for DelayFlipFlop", () => {
   });
 
   it("shoudl use the last pulse as reference for delay", () => {
-    const { result } = renderHook(() => useDelayFlipFlop());
+    const { result } = renderHook(() => useDelayedSignal());
 
     act(() => {
       result.current.pulse();

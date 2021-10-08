@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react-hooks";
-import { useTimer } from "../Timer";
+import { useTimer } from "../useTimer";
 
 describe("hook for Timer", () => {
   beforeEach(() => {

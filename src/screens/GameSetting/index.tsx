@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { GameSetting } from "hooks/GameSetting";
+import { GameSetting } from "hooks/useGameSetting";
 import { SelectOptions } from "components/SelectOptions";
 import "./style.scss";
 

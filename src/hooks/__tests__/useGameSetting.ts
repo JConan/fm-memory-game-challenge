@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { useGameSetting, Setting } from ".";
+import { useGameSetting, Setting } from "../useGameSetting";
 
 import store from "store2";
 import { act } from "react-dom/test-utils";
