@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Setting, useGameSetting } from "../hooks/useGameSetting";
+import { Setting, useGameSetting } from "../../hooks/useGameSetting";
 
 import { act } from "react-dom/test-utils";
-import { InGame } from "./InGame";
+import { InGame } from "../InGame";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { Location } from "history";
 

@@ -2,9 +2,9 @@ import userEvent from "@testing-library/user-event";
 import { useLocation, MemoryRouter } from "react-router";
 import { render, screen } from "@testing-library/react";
 import { Location } from "history";
-import { GameSettingScreen } from "./GameSetting";
+import { GameSettingScreen } from "../GameSetting";
 import { act } from "react-dom/test-utils";
-import { useGameSetting, GameSetting } from "../hooks/useGameSetting";
+import { useGameSetting, GameSetting } from "../../hooks/useGameSetting";
 
 describe("start game screen", () => {
   let gameSetting: GameSetting = undefined!;
