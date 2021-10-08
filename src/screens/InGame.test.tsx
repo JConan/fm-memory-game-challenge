@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { Setting, useGameSetting } from "hooks/GameSetting";
 
 import { act } from "react-dom/test-utils";
-import { SoloGame } from "./SoloGame";
+import { InGame } from "./InGame";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { Location } from "history";
 
@@ -16,7 +16,7 @@ describe("solo game small screen", () => {
     const Game = () => {
       location = useLocation();
       return (
-        <SoloGame
+        <InGame
           setting={{
             ...gameSetting,
             value: { ...gameSetting.value, ...settings },

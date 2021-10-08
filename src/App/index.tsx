@@ -2,7 +2,7 @@ import { useGameSetting } from "hooks/GameSetting";
 import { useEffect, useState } from "react";
 import { Route, Switch, Redirect, useHistory } from "react-router";
 import { GameSettingScreen } from "screens/GameSetting";
-import { SoloGame } from "screens/SoloGame";
+import { InGame } from "screens/InGame";
 import "./style.scss";
 
 export const App = () => {
@@ -27,7 +27,7 @@ export const App = () => {
               <GameSettingScreen gameSetting={gameSetting} />
             </Route>
             <Route path="/solo">
-              <SoloGame setting={gameSetting} />
+              <InGame setting={gameSetting} />
             </Route>
             <Route path="/multi">
               <div>To Be implemented</div>

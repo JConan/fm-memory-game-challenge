@@ -8,7 +8,7 @@ import { ModalMenu } from "components/ModalMenu";
 import { useHistory } from "react-router";
 import "./style.scss";
 
-export const SoloGame: React.FC<{ setting: GameSetting }> = ({
+export const InGame: React.FC<{ setting: GameSetting }> = ({
   setting: { value: setting },
 }) => {
   const [isMenuShowned, setShowMenu] = useState(false);
