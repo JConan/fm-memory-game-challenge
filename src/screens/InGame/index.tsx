@@ -1,18 +1,16 @@
-import { Chance } from "chance";
 import { useHistory } from "react-router";
 import { useEffect, useState } from "react";
 import { useTimer } from "../../hooks/useTimer";
-import { loadIcons } from "../../components/TileIcons";
 import { GameSetting } from "../../hooks/useGameSetting";
 import { useGameCore } from "../../hooks/useGameCore";
 import { ModalMenu } from "../../components/ModalMenu";
+import { TileGrid } from "../../components/TileGrid";
 import "./style.scss";
 
 export const InGame: React.FC<{ setting: GameSetting }> = ({
   setting: { value: setting },
 }) => {
   const [isMenuShowned, setShowMenu] = useState(false);
-  const [iconSet, setIconSet] = useState<JSX.Element[]>(null!);
   const [moveCount, setMoveCount] = useState(0);
 
   const {
@@ -25,9 +23,7 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
   const history = useHistory();
 
   useEffect(() => {
-    setIconSet(Chance().shuffle(loadIcons()));
     timer.start();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -62,22 +58,9 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
           <button onClick={showMenu}>menu</button>
         </header>
         <main>
-          <ul aria-label="memory item list">
-            {isLoaded &&
-              tiles.map((tile, idx) => (
-                <li
-                  key={idx}
-                  aria-label="memory item"
-                  onClick={() => selectTile(tile.id)}
-                  className={`tile-${tile.state} tile-size-${setting.gridSize}`}
-                >
-                  {tile.state !== "hidden" &&
-                    (setting.theme === "Numbers"
-                      ? tile.value
-                      : iconSet[tile.value])}
-                </li>
-              ))}
-          </ul>
+          {isLoaded && (
+            <TileGrid {...{ tiles, setting, onSelectTile: selectTile }} />
+          )}
         </main>
         <footer>
           <div role="timer" aria-label="time">

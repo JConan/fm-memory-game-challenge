@@ -1,4 +1,4 @@
-import { GridSize } from "hooks/useGameSetting";
+import { GridSize } from "../../hooks/useGameSetting";
 
 export interface CreateTimerProps {
   tickInterval: number;
