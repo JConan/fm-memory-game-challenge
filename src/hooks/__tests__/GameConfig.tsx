@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
-import { GameSettings, useGameConfig } from "./GameConfig";
+import { GameSettings, useGameConfig } from "../GameConfig";
 import store from "store2";
 
 describe("hook for GameConfig", () => {

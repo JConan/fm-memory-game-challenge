@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ModalSoloGameOver } from "./ModalSoloGameOver";
+import { ModalSoloGameOver } from "../ModalSoloGameOver";
 
 describe("componenu Solo GameOver", () => {
   it("should render the layout", () => {

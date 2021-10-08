@@ -1,4 +1,4 @@
-import { SoloGameScore } from "./SoloGameScore";
+import { SoloGameScore } from "../SoloGameScore";
 
 describe("Class SoloGameScore for storing moves counter and elapsed time", () => {
   it("should be have initial value", () => {

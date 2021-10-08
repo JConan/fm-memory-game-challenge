@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ModalMenu } from "./ModalMenu";
+import { ModalMenu } from "../ModalMenu";
 
 describe("component Menu", () => {
   it("should render the layout", () => {

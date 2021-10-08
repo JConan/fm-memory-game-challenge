@@ -1,4 +1,4 @@
-import { GameGridSize } from "hooks/GameConfig";
+import { GridSize } from "hooks/GameSetting";
 import { generateTileValues } from "libraries/Tools";
 
 export type TyleState = "hidden" | "selected" | "paired";
@@ -17,7 +17,7 @@ export interface Tileset {
 }
 
 export interface TilesetProps {
-  gridSize: GameGridSize;
+  gridSize: GridSize;
 }
 
 export class Tileset {
@@ -69,4 +69,4 @@ export class Tileset {
     this.getTiles().filter((tile) => tile.state === "selected");
 }
 
-export type { GameGridSize } from "hooks/GameConfig";
+export type { GridSize } from "hooks/GameSetting";

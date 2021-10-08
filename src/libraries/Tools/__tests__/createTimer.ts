@@ -1,4 +1,4 @@
-import { createTimer } from "./createTimer";
+import { createTimer } from "../createTimer";
 
 describe("timer function", () => {
   beforeEach(() => {

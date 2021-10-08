@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
-import { useDelayFlipFlop } from "./DelayFlipFlop";
+import { useDelayFlipFlop } from "../DelayFlipFlop";
 
 describe("hook for DelayFlipFlop", () => {
   beforeEach(() => {

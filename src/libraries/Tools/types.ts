@@ -1,4 +1,4 @@
-import { GameGridSize } from "hooks/GameConfig";
+import { GridSize } from "hooks/GameSetting";
 
 export interface CreateTimerProps {
   tickInterval: number;
@@ -15,7 +15,7 @@ export interface Timer {
 export type CreateTimer = (args: CreateTimerProps) => Timer;
 
 export interface GenerateTileValuesProps {
-  gridSize: GameGridSize;
+  gridSize: GridSize;
 }
 
 export type GenerateTileValues = (props: GenerateTileValuesProps) => number[];

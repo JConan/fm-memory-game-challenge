@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ModalContainer } from "components/ModalContainer";
+import { ModalContainer } from "../ModalContainer";
 
 describe("component ModalContainer", () => {
   it("should have basic layout", () => {

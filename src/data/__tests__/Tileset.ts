@@ -1,4 +1,4 @@
-import { Tileset } from "./Tileset";
+import { Tileset } from "../Tileset";
 
 describe("Class Tileset for managin tiles in the memory game", () => {
   it("should be initialized by grid size", () => {
