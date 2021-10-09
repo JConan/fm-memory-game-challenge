@@ -4,6 +4,7 @@ import { useTimer } from "../../hooks/useTimer";
 import { GameSetting } from "../../hooks/useGameSetting";
 import { useGameCore } from "../../hooks/useGameCore";
 import { ModalMenu } from "../../components/ModalMenu";
+import { ModalGameOver } from "../../components/ModalGameOver";
 import { TileGrid } from "../../components/TileGrid";
 import "./style.scss";
 
@@ -16,6 +17,7 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
   const {
     isLoaded,
     tiles,
+    isGameOver,
     onSelectTile,
     restartGame: resetTiles,
   } = useGameCore(setting);
@@ -23,9 +25,10 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
   const history = useHistory();
 
   useEffect(() => {
-    timer.start();
+    if (!isGameOver) timer.start();
+    else timer.stop();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isGameOver]);
 
   // *-------------*
   // * actions
@@ -77,6 +80,14 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
         <ModalMenu
           onClose={hideMenu}
           onResume={hideMenu}
+          onNewGame={() => history.push("/")}
+          onRestart={resetGame}
+        />
+      )}
+      {isGameOver && (
+        <ModalGameOver
+          elapsedTime={timer.value}
+          moveCount={moveCount}
           onNewGame={() => history.push("/")}
           onRestart={resetGame}
         />

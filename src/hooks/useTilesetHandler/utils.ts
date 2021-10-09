@@ -22,8 +22,8 @@ export const updateWhenMatch =
   };
 
 export const matchBy =
-  <T extends Object, P = Partial<T>>(b: P) =>
+  <T extends {}, P extends Partial<T>, K extends keyof P>(b: P) =>
   (a: T): boolean =>
     !Object.keys(b)
-      .map((k) => a[k] === b[k])
+      .map((k) => (a as unknown as P)[k as K] === b[k as K])
       .includes(false);

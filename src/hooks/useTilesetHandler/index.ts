@@ -1,8 +1,7 @@
 import { GridSize } from "../useGameSetting";
 import { useEffect, useState } from "react";
 import { useDelayedSignal } from "../useDelayedSignal";
-import { TilesetHandler } from "./types";
-import { Tile } from "../useGameCore";
+import { Tile, TilesetHandler } from "./types";
 import { generateTiles, matchBy, updateWhenMatch } from "./utils";
 import { TILES_RESOLUTION_DELAY } from "./const";
 
@@ -11,7 +10,7 @@ export const useTilesetHandler = ({
 }: {
   gridSize: GridSize;
 }): TilesetHandler => {
-  const [tiles, setTiles] = useState<Tile[]>();
+  const [tiles, setTiles] = useState<Tile[]>([]);
   const [resetCounter, setResetCounter] = useState(0);
   const { state: signal, pulse } = useDelayedSignal({
     delay: TILES_RESOLUTION_DELAY,
@@ -22,8 +21,9 @@ export const useTilesetHandler = ({
     setTiles(generateTiles(gridSize));
   }, [gridSize, resetCounter]);
 
+  // tiles resolution
   useEffect(() => {
-    if (tiles && !signal) {
+    if (tiles.length > 0 && !signal) {
       const [a, b] = tiles.filter(matchBy({ state: "selected" }));
 
       let resolver = updateWhenMatch(
@@ -57,10 +57,16 @@ export const useTilesetHandler = ({
 
         // trigger delay for tiles selection resolution
         selectedTiles.length === 1 && pulse();
+        return true;
       }
+      return false;
     },
     reset: () => {
       setResetCounter(resetCounter + 1);
     },
   };
 };
+
+export * from "./types";
+export * from "./const";
+export * from "./utils";
