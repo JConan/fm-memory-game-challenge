@@ -1,0 +1,1 @@
+export const TILES_RESOLUTION_DELAY = 650;
