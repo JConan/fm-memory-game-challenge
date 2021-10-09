@@ -10,6 +10,11 @@
   @include button-base();
   height: 40px;
   font-size: 16px;
+
+  @media screen and (min-width: 768px) {
+    height: 52px;
+    font-size: 26px;
+  }
 }
 @mixin button-size-big {
   @include button-base();

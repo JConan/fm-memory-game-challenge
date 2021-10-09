@@ -28,4 +28,31 @@
     @include button-size-big();
     @include button-color-primary();
   }
+
+  @media screen and (min-width: 768px) {
+    .title {
+      font-size: 40px;
+      margin-top: 169px;
+    }
+    .configuration {
+      top: 297px;
+
+      width: 654px;
+      height: 559px;
+      padding: 56px;
+    }
+  }
+
+  @media screen and (min-width: 768px) and (max-height: 900px) {
+    justify-content: space-evenly;
+    min-height: 620px;
+
+    .title {
+      margin-top: 0px;
+    }
+    .configuration {
+      top: unset;
+      position: relative;
+    }
+  }
 }

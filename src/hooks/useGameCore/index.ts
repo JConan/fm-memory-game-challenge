@@ -11,7 +11,7 @@ export const useGameCore = ({ gridSize }: Pick<Setting, "gridSize">) => {
   useEffect(() => {
     if (!isLoaded && tiles.length > 0) setLoaded(true);
     if (isLoaded) {
-      if (tiles.filter(matchBy({ state: "hidden" })).length === 0) {
+      if (tiles.filter(matchBy({ state: "paired" })).length === tiles.length) {
         setGameOver(true);
       }
     }

@@ -1,8 +1,15 @@
 @import "reset-css/sass/_reset.scss";
 @import "./assets/fonts/AtkinsonHyperlegible/stylesheet.css";
 @import "./sass/index.scss";
+@import "./sass/mixins/utilities.scss";
 
 body * {
+  @include text-unselectable();
   font-family: "Atkinson Hyperlegible";
   box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  overflow-y: auto;
 }

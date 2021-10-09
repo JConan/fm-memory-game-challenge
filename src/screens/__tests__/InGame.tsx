@@ -218,5 +218,8 @@ describe("solo game small screen", () => {
     expect(
       screen.getByRole("button", { name: /new game/i })
     ).toBeInTheDocument();
+
+    expect(screen.getByLabelText("Time Elapsed")).toHaveValue("0:16");
+    expect(screen.getByLabelText("Moves Taken")).toHaveValue("16 Moves");
   });
 });
