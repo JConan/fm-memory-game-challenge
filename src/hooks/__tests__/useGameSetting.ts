@@ -4,7 +4,7 @@ import { useGameSetting, Setting } from "../useGameSetting";
 import store from "store2";
 import { act } from "react-dom/test-utils";
 
-describe("Class GameConfig for storing game settings", () => {
+describe("useGameSetting for managing settings", () => {
   it("should be have initial settings", () => {
     const { result } = renderHook(() => useGameSetting());
 

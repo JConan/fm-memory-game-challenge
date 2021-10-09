@@ -3,20 +3,20 @@ import { useDelayedSignal } from "../../hooks/useDelayedSignal";
 import { generateTileValues } from "../../libraries/Tools";
 import { useEffect, useState } from "react";
 
-export type TyleState = "hidden" | "selected" | "paired";
+export type TileState = "hidden" | "selected" | "paired";
 
-export interface TileState {
+export interface Tile {
   id: number;
   value: number;
-  state: TyleState;
+  state: TileState;
 }
 
 export const useGameCore = ({ gridSize }: Pick<Setting, "gridSize">) => {
   const { state: isDelaying, pulse } = useDelayedSignal({ delay: 650 });
   const [isLoaded, setLoaded] = useState(false);
   const [isGameOver, setGameOver] = useState(false);
-  const [tiles, setTiles] = useState<TileState[]>(undefined!);
-  const [selectedTiles, setSelectedTiles] = useState<TileState[]>([]);
+  const [tiles, setTiles] = useState<Tile[]>(undefined!);
+  const [selectedTiles, setSelectedTiles] = useState<Tile[]>([]);
 
   // initialize tiles
   const { reset: resetTiles } = useInitTiles(gridSize, setTiles, setLoaded);
@@ -38,7 +38,7 @@ export const useGameCore = ({ gridSize }: Pick<Setting, "gridSize">) => {
           (tile) =>
             (findTilesBy(_selectedTiles, { value: tile.value }).length === 2
               ? { ...tile, state: "paired" }
-              : { ...tile, state: "hidden" }) as TileState
+              : { ...tile, state: "hidden" }) as Tile
         );
         const updatedTiles = tiles.map((tile) => {
           const result = toUpdate.find(({ id }) => tile.id === id);
@@ -95,7 +95,7 @@ export const useGameCore = ({ gridSize }: Pick<Setting, "gridSize">) => {
 
 const useInitTiles = (
   gridSize: GridSize,
-  setTiles: (value: React.SetStateAction<TileState[]>) => void,
+  setTiles: (value: React.SetStateAction<Tile[]>) => void,
   setLoaded: (value: React.SetStateAction<boolean>) => void
 ) => {
   const [isGenerated, setGenerated] = useState(false);
@@ -103,7 +103,7 @@ const useInitTiles = (
   useEffect(() => {
     if (!isGenerated) {
       const tileValues = generateTileValues({ gridSize }).map(
-        (value, id) => ({ id, value, state: "hidden" } as TileState)
+        (value, id) => ({ id, value, state: "hidden" } as Tile)
       );
 
       setTiles(tileValues);
@@ -121,9 +121,9 @@ const useInitTiles = (
 };
 
 const updateTiles = (
-  tiles: TileState[],
-  selectedTiles: TileState[],
-  newState: TyleState
+  tiles: Tile[],
+  selectedTiles: Tile[],
+  newState: TileState
 ) => {
   const ids = selectedTiles.map((t) => t.id);
   return tiles.map((tile) => {
@@ -131,13 +131,13 @@ const updateTiles = (
       return {
         ...tile,
         state: newState,
-      } as TileState;
+      } as Tile;
     }
     return tile;
   });
 };
 
-const findTilesBy = (tiles: TileState[], filter: Partial<TileState>) =>
+const findTilesBy = (tiles: Tile[], filter: Partial<Tile>) =>
   Object.keys(filter)
     .map((key) =>
       tiles.filter(

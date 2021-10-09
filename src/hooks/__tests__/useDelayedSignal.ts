@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
 import { useDelayedSignal } from "../useDelayedSignal";
 
-describe("hook for DelayFlipFlop", () => {
+describe("useDelayedSignal", () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });

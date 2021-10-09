@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 import { useTimer } from "../useTimer";
 
-describe("hook for Timer", () => {
+describe("useTimer provide time counter", () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });

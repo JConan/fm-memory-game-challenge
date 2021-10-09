@@ -9,7 +9,7 @@ interface Props {
   onNewGame?: () => void;
 }
 
-export const ModalSoloGameOver = ({
+export const ModalGameOver = ({
   elapsedTime,
   moveCount,
   onClose,

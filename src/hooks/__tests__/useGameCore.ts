@@ -1,8 +1,8 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
-import { TileState, useGameCore } from "../useGameCore";
+import { Tile, useGameCore } from "../useGameCore";
 
-describe("hook for GameCore", () => {
+describe("useGameCore InGame logic", () => {
   const animationDelay = 650;
   const initGameCoreHook = () => {
     return renderHook(() =>
@@ -12,7 +12,7 @@ describe("hook for GameCore", () => {
     );
   };
 
-  const getUniqueTiles = (tiles: TileState[]) =>
+  const getUniqueTiles = (tiles: Tile[]) =>
     tiles.filter(
       (tile, idx) =>
         tiles.findIndex(({ value }) => value === tile.value) === idx
