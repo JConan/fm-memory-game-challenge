@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Setting, useGameSetting } from "../../hooks/useGameSetting";
-
 import { act } from "react-dom/test-utils";
 import { InGame } from "../InGame";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { Location } from "history";
+import Chance from "chance";
 
 describe("solo game small screen", () => {
   let location: Location | undefined = undefined;
@@ -190,5 +190,33 @@ describe("solo game small screen", () => {
     expect(screen.getByRole("status", { name: "moves" })).toHaveTextContent(
       "Moves1"
     );
+  });
+
+  it("should have winning screen", () => {
+    // setup seeded tiles
+    const solution = [0, 13, 11, 12, 5, 10, 1, 3, 4, 8, 6, 15, 7, 9, 2, 14];
+    jest
+      .spyOn(Chance, "Chance")
+      .mockImplementationOnce(() => Chance("hello.frontend.io"));
+    render(<WrappedSoloGame />);
+
+    // solve grid with solution
+    const tiles = screen.getAllByRole("listitem", { name: /memory item/i });
+    solution.forEach((id) => {
+      act(() => {
+        userEvent.click(tiles[id]);
+      });
+      act(() => {
+        jest.advanceTimersByTime(1000);
+      });
+    });
+
+    expect(screen.getByText(/you did it/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /restart/i })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /new game/i })
+    ).toBeInTheDocument();
   });
 });
