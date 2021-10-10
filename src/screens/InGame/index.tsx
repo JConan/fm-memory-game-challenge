@@ -6,11 +6,13 @@ import { useGameCore } from "../../hooks/useGameCore";
 import { ModalMenu } from "../../components/ModalMenu";
 import { ModalGameOver } from "../../components/ModalGameOver";
 import { TileGrid } from "../../components/TileGrid";
+import { useWindowWidth } from "@react-hook/window-size";
 import "./style.scss";
 
 export const InGame: React.FC<{ setting: GameSetting }> = ({
   setting: { value: setting },
 }) => {
+  const windowWidth = useWindowWidth(); // how to mock this hook ???
   const [isMenuShowned, setShowMenu] = useState(false);
   const [moveCount, setMoveCount] = useState(0);
 
@@ -53,12 +55,29 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
     hideMenu();
   };
 
+  const newGame = () => {
+    history.push("/");
+  };
+
   return (
     <>
       <div className="screen-container">
         <header>
           <span>memory</span>
-          <button onClick={showMenu}>menu</button>
+          {windowWidth >= 760 ? ( // hum how to test ???
+            <div>
+              <button className="btn-restart" onClick={resetGame}>
+                Restart
+              </button>
+              <button className="btn-new-game" onClick={newGame}>
+                New Game
+              </button>
+            </div>
+          ) : (
+            <button className={`btn-menu`} onClick={showMenu}>
+              menu
+            </button>
+          )}
         </header>
         <main>
           {isLoaded && (
@@ -80,7 +99,7 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
         <ModalMenu
           onClose={hideMenu}
           onResume={hideMenu}
-          onNewGame={() => history.push("/")}
+          onNewGame={newGame}
           onRestart={resetGame}
         />
       )}
@@ -88,7 +107,7 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
         <ModalGameOver
           elapsedTime={timer.value}
           moveCount={moveCount}
-          onNewGame={() => history.push("/")}
+          onNewGame={newGame}
           onRestart={resetGame}
         />
       )}
