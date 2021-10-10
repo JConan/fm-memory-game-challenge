@@ -6,6 +6,8 @@ import { InGame } from "../InGame";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { Location } from "history";
 import Chance from "chance";
+import * as WindowHooks from "@react-hook/window-size";
+import { useState } from "react";
 
 describe("solo game small screen", () => {
   let location: Location | undefined = undefined;

@@ -28,6 +28,24 @@
       @include button-color-primary();
       width: 78px;
     }
+
+    div {
+      display: flex;
+      button {
+        flex-shrink: 0;
+
+        &:first-child {
+          font-size: 20px;
+          width: 127px;
+        }
+        &:last-child {
+          margin-left: 16px;
+          font-size: 20px;
+          width: 149px;
+          @include button-color-secondary();
+        }
+      }
+    }
   }
   footer {
     height: 70px;
@@ -116,6 +134,15 @@
 
 @media screen and (min-width: 768px) {
   .screen-container {
+    padding: 40px;
+    max-width: 1190px;
+    margin: auto;
+
+    header {
+      span {
+        font-size: 40px;
+      }
+    }
     main {
       padding: 40px;
 
@@ -139,6 +166,26 @@
             width: 82px;
             height: 82px;
             font-size: 44px;
+          }
+        }
+      }
+    }
+
+    footer {
+      height: 72px;
+      width: 540px;
+      div {
+        height: inherit;
+        display: flex;
+        flex-direction: row;
+        max-width: 255px;
+
+        span {
+          &:first-child {
+            font-size: 18px;
+          }
+          &:last-child {
+            font-size: 32px;
           }
         }
       }
