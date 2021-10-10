@@ -27,13 +27,16 @@ export const TileGrid = ({ tiles, setting, onSelectTile }: TileGridProps) => {
   }, []);
 
   return (
-    <ul aria-label="memory item list">
+    <ul
+      aria-label="memory item list"
+      className={`tiles-grid tiles-grid-${setting.gridSize}`}
+    >
       {tiles.map((tile, idx) => (
         <li
           key={idx}
           aria-label="memory item"
           onClick={() => onSelectTile(tile.id)}
-          className={`tile-${tile.state} tile-size-${setting.gridSize}`}
+          className={`tile tile-${tile.state}`}
         >
           {tile.state !== "hidden" &&
             (setting.theme === "Numbers" ? tile.value : iconSet[tile.value])}

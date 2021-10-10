@@ -59,39 +59,27 @@
     align-items: center;
     justify-content: center;
 
-    ul {
+    .tiles-grid {
       width: 327px;
       height: 327px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
 
-      li {
-        color: #fcfcfc;
-        border-radius: 50%;
+      .tile {
         flex-shrink: 0;
+        border-radius: 50%;
+
+        color: #fcfcfc;
+        cursor: pointer;
+        font-weight: 700;
+
+        transition: background-color 85ms ease-in-out;
+        transition: color 85ms ease-in-out;
+
         display: flex;
         justify-content: center;
         align-items: center;
-
-        cursor: pointer;
-        caret-color: #00000000;
-
-        &.tile-size-4x4 {
-          font-size: 40px;
-          font-weight: 700;
-          min-width: 72.53px;
-          min-height: 72.53px;
-          margin-bottom: 10px;
-        }
-
-        &.tile-size-6x6 {
-          font-size: 24px;
-          font-weight: 700;
-          min-width: 46.88px;
-          min-height: 46.88px;
-          margin-bottom: 8px;
-        }
 
         &.tile-hidden {
           background-color: #304859;
@@ -103,8 +91,56 @@
         &.tile-paired {
           background-color: #bcced9;
         }
-        transition: background-color 85ms ease-in-out;
-        transition: color 85ms ease-in-out;
+      }
+
+      &.tiles-grid-4x4 {
+        .tile {
+          width: 72.53px;
+          height: 72.53px;
+          font-size: 40px;
+          margin-bottom: 10px;
+        }
+      }
+
+      &.tiles-grid-6x6 {
+        .tile {
+          width: 46.88px;
+          height: 46.88px;
+          font-size: 24px;
+          margin-bottom: 8px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .screen-container {
+    main {
+      padding: 40px;
+
+      .tiles-grid {
+        &.tiles-grid-4x4 {
+          width: 532px;
+          height: 532px;
+
+          .tile {
+            width: 118px;
+            height: 118px;
+            font-size: 56px;
+            margin-bottom: 10px;
+          }
+        }
+        &.tiles-grid-6x6 {
+          width: 572px;
+          height: 572px;
+
+          .tile {
+            width: 82px;
+            height: 82px;
+            font-size: 44px;
+          }
+        }
       }
     }
   }
