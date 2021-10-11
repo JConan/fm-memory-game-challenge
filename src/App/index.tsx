@@ -1,6 +1,6 @@
 import { useGameSetting } from "../hooks/useGameSetting";
 import { useEffect, useState } from "react";
-import { Route, Switch, Redirect, useHistory } from "react-router";
+import { Route, Switch, Redirect } from "react-router";
 import { GameSettingScreen } from "../screens/GameSetting";
 import { InGame } from "../screens/InGame";
 import "./style.scss";
@@ -15,8 +15,6 @@ export const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const history = useHistory();
-
   return (
     <>
       {!isLoaded && <div role="progressbar">loading ...</div>}
@@ -30,14 +28,7 @@ export const App = () => {
               <InGame setting={gameSetting} />
             </Route>
             <Route path="/multi">
-              <div>To Be implemented</div>
-              <button
-                onClick={() => {
-                  history.goBack();
-                }}
-              >
-                back
-              </button>
+              <InGame setting={gameSetting} />
             </Route>
             <Redirect to="/setting" />
           </Switch>

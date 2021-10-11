@@ -224,4 +224,42 @@ describe("solo game small screen", () => {
     expect(screen.getByLabelText("Time Elapsed")).toHaveValue("0:16");
     expect(screen.getByLabelText("Moves Taken")).toHaveValue("16 Moves");
   });
+
+  it.only("should how player turn in multiplayer session", () => {
+    render(<WrappedSoloGame numberOfPlayers={4} />);
+
+    const players = screen.getAllByRole("status", { name: /player/i });
+
+    players.forEach((player, idx) => {
+      expect(player).toHaveTextContent(`Player ${idx + 1}`);
+    });
+
+    expect(players[0]).toHaveClass("player-active");
+    expect(players[1]).not.toHaveClass("player-active");
+    expect(players[2]).not.toHaveClass("player-active");
+    expect(players[3]).not.toHaveClass("player-active");
+  });
+
+  it.only("should have player turn reflected in players status", () => {
+    // setup seeded tiles
+    const solution = [0, 13, 11, 12, 5, 10, 1, 3, 4, 8, 6, 15, 7, 9, 2, 14];
+    jest
+      .spyOn(Chance, "Chance")
+      .mockImplementationOnce(() => Chance("hello.frontend.io"));
+    render(<WrappedSoloGame numberOfPlayers={4} />);
+    const tiles = screen.getAllByRole("listitem", { name: /memory item/i });
+
+    act(() => {
+      userEvent.click(tiles[0]);
+    });
+    act(() => {
+      userEvent.click(tiles[2]);
+    });
+    const players = screen.getAllByRole("status", { name: /player/i });
+
+    expect(players[0]).not.toHaveClass("player-active");
+    expect(players[1]).toHaveClass("player-active");
+    expect(players[2]).not.toHaveClass("player-active");
+    expect(players[3]).not.toHaveClass("player-active");
+  });
 });

@@ -15,6 +15,7 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
   const windowWidth = useWindowWidth(); // how to mock this hook ???
   const [isMenuShowned, setShowMenu] = useState(false);
   const [moveCount, setMoveCount] = useState(0);
+  const [turn, setTurn] = useState(0);
 
   const {
     isLoaded,
@@ -25,6 +26,13 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
   } = useGameCore(setting);
   const timer = useTimer();
   const history = useHistory();
+
+  useEffect(() => {
+    if (moveCount > 0 && moveCount % 2 === 0) {
+      setTurn(turn + 1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [moveCount]);
 
   useEffect(() => {
     if (!isGameOver) timer.start();
@@ -84,15 +92,42 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
             <TileGrid {...{ tiles, setting, onSelectTile: selectTile }} />
           )}
         </main>
-        <footer>
-          <div role="timer" aria-label="time">
-            <span>Time</span>
-            <span>{timer.value}</span>
-          </div>
-          <div role="status" aria-label="moves">
-            <span>Moves</span>
-            <span>{moveCount}</span>
-          </div>
+        <footer
+          className={`${setting.numberOfPlayers === 1 ? "solo" : "multi"}`}
+        >
+          {setting.numberOfPlayers === 1 && (
+            <>
+              <div role="timer" aria-label="time">
+                <span>Time</span>
+                <span>{timer.value}</span>
+              </div>
+              <div role="status" aria-label="moves">
+                <span>Moves</span>
+                <span>{moveCount}</span>
+              </div>
+            </>
+          )}
+          {setting.numberOfPlayers > 1 && (
+            <>
+              {Array(setting.numberOfPlayers)
+                .fill(0)
+                .map((_, idx) => (
+                  <div
+                    key={idx}
+                    role="status"
+                    className={`${
+                      turn % setting.numberOfPlayers === idx
+                        ? "player-active"
+                        : ""
+                    }`}
+                    aria-label={`player ${idx + 1}`}
+                  >
+                    <span data-player={idx + 1}>{`Player ${idx + 1}`}</span>
+                    <span>{0}</span>
+                  </div>
+                ))}
+            </>
+          )}
         </footer>
       </div>
       {isMenuShowned && (

@@ -47,7 +47,7 @@
       }
     }
   }
-  footer {
+  footer.solo {
     height: 70px;
 
     div {
@@ -72,6 +72,83 @@
       }
     }
   }
+  footer.multi {
+    height: 78px;
+    display: flex;
+    align-items: flex-end;
+
+    div {
+      position: relative;
+      width: 64px;
+      height: 70px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      background-color: #dfe7ec;
+      border-radius: 5px;
+      transition: all 400ms ease-in-out;
+      &::before {
+        content: " ";
+        background-color: #dfe7ec;
+        opacity: 0;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        top: -8px;
+        transform: rotate(45deg);
+        transition: all 400ms ease-in-out;
+      }
+      span {
+        &:first-child {
+          font-size: 0px;
+          &::before {
+            content: "P";
+            font-size: 15px;
+            font-weight: 700;
+            color: #7191a5;
+            transition: all 400ms ease-in-out;
+          }
+          &::after {
+            content: attr(data-player);
+            font-size: 15px;
+            font-weight: 700;
+            color: #7191a5;
+            transition: all 400ms ease-in-out;
+          }
+        }
+        &:last-child {
+          font-size: 24px;
+          font-weight: 700;
+          color: #304859;
+          transition: all 400ms ease-in-out;
+        }
+      }
+    }
+
+    div.player-active {
+      background-color: #fda214;
+
+      &::before {
+        background-color: #fda214;
+        opacity: 1;
+      }
+
+      span {
+        &:first-child {
+          &::before {
+            color: #fcfcfc;
+          }
+          &::after {
+            color: #fcfcfc;
+          }
+        }
+        &:last-child {
+          color: #fcfcfc;
+        }
+      }
+    }
+  }
   main {
     display: flex;
     align-items: center;
@@ -92,8 +169,7 @@
         cursor: pointer;
         font-weight: 700;
 
-        transition: background-color 85ms ease-in-out;
-        transition: color 85ms ease-in-out;
+        transition: all 185ms ease-in-out;
 
         display: flex;
         justify-content: center;
