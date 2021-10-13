@@ -16,6 +16,7 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
   const [isMenuShowned, setShowMenu] = useState(false);
   const [moveCount, setMoveCount] = useState(0);
   const [turn, setTurn] = useState(0);
+  const [scores, setScores] = useState([0, 0, 0, 0]);
 
   const {
     isLoaded,
@@ -38,6 +39,10 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
     ) {
       if (remainPair === remainPairRef.current) {
         setTurn(turn + 1);
+      } else {
+        const newScore = [...scores];
+        newScore[turn % setting.numberOfPlayers] += 1;
+        setScores(newScore);
       }
       remainPairRef.current = remainPair;
     }
@@ -133,7 +138,7 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
                     aria-label={`player ${idx + 1}`}
                   >
                     <span data-player={idx + 1}>{`Player ${idx + 1}`}</span>
-                    <span>{0}</span>
+                    <span>{scores[idx]}</span>
                   </div>
                 ))}
             </>

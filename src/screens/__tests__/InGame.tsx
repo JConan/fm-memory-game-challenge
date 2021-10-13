@@ -244,6 +244,16 @@ describe("solo game small screen", () => {
     expect(countPairedTiles()).toBe(1);
     expect(getActivePlayer()).toBe(1);
   });
+
+  it("should player's score is increase after a paired tiles", () => {
+    render(<WrappedSoloGame numberOfPlayers={4} />);
+
+    const playerStatus = screen.getByRole("status", { name: /player 1/i });
+    expect(playerStatus).toHaveTextContent("Player 10");
+
+    userPlayTileIndexes(0, 1);
+    expect(playerStatus).toHaveTextContent("Player 11");
+  });
 });
 
 /**
