@@ -249,10 +249,20 @@ describe("solo game small screen", () => {
     render(<WrappedSoloGame numberOfPlayers={4} />);
 
     const playerStatus = screen.getByRole("status", { name: /player 1/i });
-    expect(playerStatus).toHaveTextContent("Player 10");
 
     userPlayTileIndexes(0, 1);
     expect(playerStatus).toHaveTextContent("Player 11");
+  });
+
+  it("should correctly reset players scores and turn", () => {
+    render(<WrappedSoloGame numberOfPlayers={4} />);
+    userPlayTileIndexes(0, 1);
+
+    userEvent.click(screen.getByRole("button", { name: /menu/i }));
+    userEvent.click(screen.getByRole("button", { name: /restart/i }));
+
+    const playerStatus = screen.getByRole("status", { name: /player 1/i });
+    expect(playerStatus).toHaveTextContent("Player 10");
   });
 });
 

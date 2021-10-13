@@ -76,6 +76,8 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
     timer.restart();
     resetTiles();
     hideMenu();
+    setTurn(0);
+    setScores([0, 0, 0, 0]);
   };
 
   const newGame = () => {
