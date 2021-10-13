@@ -3,7 +3,7 @@ import { useTilesetHandler, matchBy } from "../../hooks/useTilesetHandler";
 import { useEffect, useState } from "react";
 
 export const useGameCore = ({ gridSize }: Pick<Setting, "gridSize">) => {
-  const { tiles, select, reset } = useTilesetHandler({ gridSize });
+  const { tiles, select, reset, remainPair } = useTilesetHandler({ gridSize });
 
   const [isGameOver, setGameOver] = useState(false);
   const [isLoaded, setLoaded] = useState(false);
@@ -22,6 +22,7 @@ export const useGameCore = ({ gridSize }: Pick<Setting, "gridSize">) => {
     isGameOver,
     tiles,
     isLoaded,
+    remainPair,
     onSelectTile: (tile: { id: number }) => select(tile),
     restartGame: () => {
       reset();

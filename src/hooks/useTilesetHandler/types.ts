@@ -7,6 +7,7 @@ export interface Tile {
 }
 export interface TilesetHandler {
   tiles: Tile[];
+  remainPair: number;
   select: (props: { id: number }) => boolean;
   reset: () => void;
 }

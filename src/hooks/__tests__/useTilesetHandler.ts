@@ -1,14 +1,25 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook, RenderResult } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
 import { Tile } from "../useGameCore";
 import {
+  TilesetHandler,
   TILES_RESOLUTION_DELAY,
   useTilesetHandler,
 } from "../useTilesetHandler";
+import * as Generator from "../../libraries/Tools/generateTileValues";
 
 describe("useTiles for managing tileset", () => {
   beforeEach(() => {
     jest.useFakeTimers();
+    // make tiles to be generated in order
+    jest
+      .spyOn(Generator, "generateTileValues")
+      .mockImplementationOnce(({ gridSize }) =>
+        Array(gridSize === "4x4" ? 8 : 18)
+          .fill(0)
+          .map((_, i) => [i, i])
+          .flatMap((x) => x)
+      );
   });
   afterAll(() => {
     jest.useRealTimers();
@@ -31,6 +42,7 @@ describe("useTiles for managing tileset", () => {
   });
 
   it("should be able to reset tiles", () => {
+    jest.restoreAllMocks();
     const { result } = renderHook(() => useTilesetHandler({ gridSize: "4x4" }));
     const firstTiles = [...result.current.tiles];
 
@@ -41,32 +53,29 @@ describe("useTiles for managing tileset", () => {
   });
 
   it("should be able to selected a tiles", () => {
-    const { result } = renderHook(() => useTilesetHandler({ gridSize: "4x4" }));
-
-    act(() => {
-      result.current.select({ id: result.current.tiles[0].id });
-    });
-
-    expect(result.current.tiles[0].state).toBe("selected");
+    const { result: handler } = renderHook(() =>
+      useTilesetHandler({ gridSize: "4x4" })
+    );
+    selectTiles(handler, 0);
+    expect(handler.current.tiles[0].state).toBe("selected");
   });
 
   it("should be able to selected at most 2 tiles", () => {
-    const { result } = renderHook(() => useTilesetHandler({ gridSize: "4x4" }));
+    const { result: handler } = renderHook(() =>
+      useTilesetHandler({ gridSize: "4x4" })
+    );
 
     // select first 2 tiles
-    result.current.tiles.slice(0, 2).forEach(({ id }) => {
-      act(() => {
-        result.current.select({ id });
-      });
-      expect(findOneBy(result.current.tiles, { id }).state).toBe("selected");
-    });
+    const selectTileOnId = handleTileSelection(handler, false);
+    handler.current.tiles
+      .slice(0, 2)
+      .map(({ id }) => id)
+      .forEach(selectTileOnId);
 
     // third selection should not be possible
-    const thirdTile = result.current.tiles[2];
-    act(() => {
-      result.current.select({ id: thirdTile.id });
-    });
-    expect(findOneBy(result.current.tiles, { id: thirdTile.id }).state).toBe(
+    const thirdTile = handler.current.tiles[2];
+    selectTileOnId(thirdTile.id);
+    expect(findOneBy(handler.current.tiles, { id: thirdTile.id })?.state).toBe(
       "hidden"
     );
   });
@@ -81,7 +90,7 @@ describe("useTiles for managing tileset", () => {
       act(() => {
         result.current.select({ id });
       });
-      expect(findOneBy(result.current.tiles, { id }).state).toBe("selected");
+      expect(findOneBy(result.current.tiles, { id })?.state).toBe("selected");
     });
 
     // advance time for resolving tiles
@@ -89,7 +98,7 @@ describe("useTiles for managing tileset", () => {
       jest.advanceTimersByTime(TILES_RESOLUTION_DELAY);
     });
     sortedTiles.slice(0, 2).forEach(({ id }) => {
-      expect(findOneBy(result.current.tiles, { id }).state).toBe("paired");
+      expect(findOneBy(result.current.tiles, { id })?.state).toBe("paired");
     });
   });
 
@@ -104,7 +113,7 @@ describe("useTiles for managing tileset", () => {
       act(() => {
         result.current.select({ id });
       });
-      expect(findOneBy(result.current.tiles, { id }).state).toBe("selected");
+      expect(findOneBy(result.current.tiles, { id })?.state).toBe("selected");
     });
 
     // advance time for resolving tiles
@@ -112,7 +121,7 @@ describe("useTiles for managing tileset", () => {
       jest.advanceTimersByTime(TILES_RESOLUTION_DELAY);
     });
     unmatchTiles.forEach(({ id }) => {
-      expect(findOneBy(result.current.tiles, { id }).state).toBe("hidden");
+      expect(findOneBy(result.current.tiles, { id })?.state).toBe("hidden");
     });
   });
 
@@ -135,14 +144,53 @@ describe("useTiles for managing tileset", () => {
     });
 
     expect(
-      findOneBy(result.current.tiles, { id: sortedTiles[0].id }).state
+      findOneBy(result.current.tiles, { id: sortedTiles[0].id })?.state
     ).toBe("paired");
+  });
+
+  it("should have a paired remain counter for 4x4 gridSize", () => {
+    const { result } = renderHook(() => useTilesetHandler({ gridSize: "4x4" }));
+    expect(result.current.remainPair).toBe(8);
+  });
+
+  it("should have a paired remain counter for 6x6 gridSize", () => {
+    const { result } = renderHook(() => useTilesetHandler({ gridSize: "6x6" }));
+    expect(result.current.remainPair).toBe(18);
+  });
+
+  it("should update remain Paired counter after a valid selection if resolve", () => {
+    const { result: handler } = renderHook(() =>
+      useTilesetHandler({ gridSize: "6x6" })
+    );
+
+    selectTiles(handler, 0, 1);
+    expect(handler.current.remainPair).toBe(17);
+
+    for (let i = 2; i < 6 * 6; i++) {
+      selectTiles(handler, i);
+    }
+    expect(handler.current.remainPair).toBe(0);
   });
 });
 
-const findAllBy = (tiles: Tile[], filter: Partial<Tile>) => {
-  return tiles.filter((tile) => match(tile, filter));
+const selectTiles = (
+  handler: RenderResult<TilesetHandler>,
+  ...indexes: number[]
+) => {
+  indexes.forEach(handleTileSelection(handler));
 };
+
+const handleTileSelection =
+  (handler: RenderResult<TilesetHandler>, shouldAdvanceTimer: boolean = true) =>
+  (id: number) => {
+    act(() => {
+      handler.current.select({ id });
+    });
+    shouldAdvanceTimer &&
+      act(() => {
+        jest.advanceTimersByTime(TILES_RESOLUTION_DELAY);
+      });
+  };
 
 const findOneBy = (tiles: Tile[], filter: Partial<Tile>) => {
   for (const tile of tiles) {
@@ -150,7 +198,7 @@ const findOneBy = (tiles: Tile[], filter: Partial<Tile>) => {
   }
 };
 
-const match = <T extends Object>(a: T, b: Partial<T>): boolean =>
+const match = <T extends {}>(a: T, b: Partial<T>): boolean =>
   !Object.keys(b)
-    .map((k) => a[k] === b[k])
+    .map((k) => a[k as keyof T] === b[k as keyof T])
     .includes(false);

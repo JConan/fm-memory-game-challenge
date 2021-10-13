@@ -1,5 +1,5 @@
 import { useHistory } from "react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTimer } from "../../hooks/useTimer";
 import { GameSetting } from "../../hooks/useGameSetting";
 import { useGameCore } from "../../hooks/useGameCore";
@@ -21,18 +21,28 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
     isLoaded,
     tiles,
     isGameOver,
+    remainPair,
     onSelectTile,
     restartGame: resetTiles,
   } = useGameCore(setting);
   const timer = useTimer();
   const history = useHistory();
 
+  const remainPairRef = useRef<number>(remainPair);
+
+  // change turn
   useEffect(() => {
-    if (moveCount > 0 && moveCount % 2 === 0) {
-      setTurn(turn + 1);
+    if (
+      moveCount > 0 &&
+      tiles.filter((tile) => tile.state === "selected").length === 0
+    ) {
+      if (remainPair === remainPairRef.current) {
+        setTurn(turn + 1);
+      }
+      remainPairRef.current = remainPair;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [moveCount]);
+  }, [tiles]);
 
   useEffect(() => {
     if (!isGameOver) timer.start();

@@ -5,9 +5,8 @@ import { act } from "react-dom/test-utils";
 import { InGame } from "../InGame";
 import { MemoryRouter, useLocation } from "react-router-dom";
 import { Location } from "history";
-import Chance from "chance";
-import * as WindowHooks from "@react-hook/window-size";
-import { useState } from "react";
+import * as Generator from "../../libraries/Tools/generateTileValues";
+import { TILES_RESOLUTION_DELAY } from "../../hooks/useTilesetHandler";
 
 describe("solo game small screen", () => {
   let location: Location | undefined = undefined;
@@ -36,9 +35,21 @@ describe("solo game small screen", () => {
 
   beforeEach(() => {
     jest.useFakeTimers();
+
+    // make tiles to be generated in order
+    jest
+      .spyOn(Generator, "generateTileValues")
+      .mockImplementationOnce(({ gridSize }) =>
+        Array(gridSize === "4x4" ? 8 : 18)
+          .fill(0)
+          .map((_, i) => [i, i])
+          .flatMap((x) => x)
+      );
   });
   afterEach(() => {
     jest.useRealTimers();
+    // make tiles to be generated in order
+    jest.spyOn(Generator, "generateTileValues").mockRestore();
   });
 
   it("should have build layout for 4x4 grid", () => {
@@ -195,23 +206,13 @@ describe("solo game small screen", () => {
   });
 
   it("should have winning screen", () => {
-    // setup seeded tiles
-    const solution = [0, 13, 11, 12, 5, 10, 1, 3, 4, 8, 6, 15, 7, 9, 2, 14];
-    jest
-      .spyOn(Chance, "Chance")
-      .mockImplementationOnce(() => Chance("hello.frontend.io"));
     render(<WrappedSoloGame />);
 
-    // solve grid with solution
-    const tiles = screen.getAllByRole("listitem", { name: /memory item/i });
-    solution.forEach((id) => {
-      act(() => {
-        userEvent.click(tiles[id]);
-      });
-      act(() => {
-        jest.advanceTimersByTime(1000);
-      });
-    });
+    userPlayTileIndexes(
+      ...Array(16)
+        .fill(0)
+        .map((_, i) => i)
+    );
 
     expect(screen.getByText(/you did it/i)).toBeInTheDocument();
     expect(
@@ -221,45 +222,65 @@ describe("solo game small screen", () => {
       screen.getByRole("button", { name: /new game/i })
     ).toBeInTheDocument();
 
-    expect(screen.getByLabelText("Time Elapsed")).toHaveValue("0:16");
+    expect(screen.getByLabelText("Time Elapsed")).toHaveValue("0:10");
     expect(screen.getByLabelText("Moves Taken")).toHaveValue("16 Moves");
   });
 
-  it.only("should how player turn in multiplayer session", () => {
+  it("should how player turn in multiplayer session", () => {
     render(<WrappedSoloGame numberOfPlayers={4} />);
-
-    const players = screen.getAllByRole("status", { name: /player/i });
-
-    players.forEach((player, idx) => {
-      expect(player).toHaveTextContent(`Player ${idx + 1}`);
-    });
-
-    expect(players[0]).toHaveClass("player-active");
-    expect(players[1]).not.toHaveClass("player-active");
-    expect(players[2]).not.toHaveClass("player-active");
-    expect(players[3]).not.toHaveClass("player-active");
+    expect(getActivePlayer()).toBe(1);
   });
 
-  it.only("should have player turn reflected in players status", () => {
-    // setup seeded tiles
-    const solution = [0, 13, 11, 12, 5, 10, 1, 3, 4, 8, 6, 15, 7, 9, 2, 14];
-    jest
-      .spyOn(Chance, "Chance")
-      .mockImplementationOnce(() => Chance("hello.frontend.io"));
+  it("should have player turn reflected in players status", () => {
     render(<WrappedSoloGame numberOfPlayers={4} />);
-    const tiles = screen.getAllByRole("listitem", { name: /memory item/i });
+    userPlayTileIndexes(0, 2);
+    expect(countPairedTiles()).toBe(0);
+    expect(getActivePlayer()).toBe(2);
+  });
 
-    act(() => {
-      userEvent.click(tiles[0]);
-    });
-    act(() => {
-      userEvent.click(tiles[2]);
-    });
-    const players = screen.getAllByRole("status", { name: /player/i });
-
-    expect(players[0]).not.toHaveClass("player-active");
-    expect(players[1]).toHaveClass("player-active");
-    expect(players[2]).not.toHaveClass("player-active");
-    expect(players[3]).not.toHaveClass("player-active");
+  it("should active player keep playing after a paired of tiles", () => {
+    render(<WrappedSoloGame numberOfPlayers={4} />);
+    userPlayTileIndexes(0, 1);
+    expect(countPairedTiles()).toBe(1);
+    expect(getActivePlayer()).toBe(1);
   });
 });
+
+/**
+ * Simulate user selected tiles with tiles resolution after each moves
+ * @param indexes list of tiles id
+ */
+const userPlayTileIndexes = (...indexes: number[]) => {
+  const tiles = screen.getAllByRole("listitem", { name: /memory item/i });
+  indexes.forEach((i) => {
+    act(() => {
+      userEvent.click(tiles[i]);
+    });
+    act(() => {
+      jest.advanceTimersByTime(TILES_RESOLUTION_DELAY);
+    });
+  });
+};
+
+/**
+ * get from screen active player (1 to 4)
+ * @returns number
+ */
+const getActivePlayer = () => {
+  const players = screen.getAllByRole("status", { name: /player/i });
+
+  for (const [id, player] of players.entries()) {
+    if (player.classList.contains("player-active")) return id + 1;
+  }
+};
+
+/**
+ * Count the number of paired tiles
+ * @returns number
+ */
+const countPairedTiles = () => {
+  const tiles = screen.getAllByRole("listitem", { name: /memory item/i });
+  return (
+    tiles.filter((tile) => tile.classList.contains("tile-paired")).length / 2
+  );
+};
