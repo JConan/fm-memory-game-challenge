@@ -132,7 +132,7 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
                   <div
                     key={idx}
                     role="status"
-                    className={`${
+                    className={`player-status ${
                       turn % setting.numberOfPlayers === idx
                         ? "player-active"
                         : ""
