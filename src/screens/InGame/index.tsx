@@ -16,7 +16,9 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
   const [isMenuShowned, setShowMenu] = useState(false);
   const [moveCount, setMoveCount] = useState(0);
   const [turn, setTurn] = useState(0);
-  const [scores, setScores] = useState([0, 0, 0, 0]);
+  const [scores, setScores] = useState<[number, number, number, number]>([
+    0, 0, 0, 0,
+  ]);
 
   const {
     isLoaded,
@@ -42,7 +44,7 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
       } else {
         const newScore = [...scores];
         newScore[turn % setting.numberOfPlayers] += 1;
-        setScores(newScore);
+        setScores(newScore as [number, number, number, number]);
       }
       remainPairRef.current = remainPair;
     }
@@ -157,6 +159,8 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
       )}
       {isGameOver && (
         <ModalGameOver
+          numberOfPlayers={setting.numberOfPlayers}
+          scores={scores}
           elapsedTime={timer.value}
           moveCount={moveCount}
           onNewGame={newGame}

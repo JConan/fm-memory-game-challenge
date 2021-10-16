@@ -27,7 +27,7 @@
 
   .score-container {
     position: relative;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 
     input {
       border: none;
@@ -57,9 +57,64 @@
     @include button-size-big();
     @include button-color-primary();
     width: 279px;
+    margin-bottom: 16px;
   }
 
   button:last-child {
     @include button-color-secondary();
+  }
+}
+
+.game-over-container.multi {
+  height: 488px;
+
+  .score-container.winner {
+    label,
+    input {
+      background-color: #152938;
+      color: #fcfcfc;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .game-over-container {
+    width: 654px;
+    height: 510px;
+    h1 {
+      font-size: 48px;
+    }
+    h2 {
+      font-size: 18px;
+    }
+  }
+
+  .game-over-container.multi {
+    height: 702px;
+    border-radius: 20px;
+
+    .score-container {
+      label {
+        font-size: 18px;
+        height: 72px;
+      }
+      input {
+        width: 542px;
+        height: 72px;
+        border-radius: 10px;
+        margin-bottom: 16px;
+        font-size: 32px;
+      }
+    }
+    .buttons-container {
+      width: 542px;
+      height: 52px;
+      display: flex;
+      justify-content: space-between;
+      button {
+        width: 264px;
+        font-size: 20px;
+      }
+    }
   }
 }
