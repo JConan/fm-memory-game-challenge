@@ -13,12 +13,9 @@ This is a solution to the [Memory game challenge on Frontend Mentor](https://www
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
 - [Author](#author)
 - [Acknowledgments](#acknowledgments)
-
-**Note: Delete this note and update the table of contents based on what sections you keep.**
 
 ## Overview
 
@@ -34,22 +31,22 @@ Users should be able to:
 
 ### Screenshot
 
-> _[TODO]_
+![demo](./images/memory-challenge-small.gif) ![demo](./images/memory-challenge-2-small.gif)
 
 ### Links
 
-- Solution URL: [solution URL](https://github.com/JConan/memory-game-challenge)
 - Live Site URL: [live site URL](https://jconan-memory-game-challenge.netlify.app/)
 
 ## My process
 
-> _[TODO]_
+1. create test first approches (TDD)
+2. implements logic without styling
+3. add styling mobile first (no test to validate styling)
+4. add media queries for responsiveness
 
 ### Built with
 
-- Semantic HTML5 markup
-- Flexbox
-- Mobile-first workflow
+- [Testing Library](https://testing-library.com/) - Testing library
 - [React](https://reactjs.org/) - JS library
 - [Saas](https://sass-lang.com/) - CSS with superpowers
 
@@ -63,10 +60,6 @@ I also needed some sort of "time-based flip-flop switch" in order to delay the r
 - jest.advanceTimersByTime
 
 Hooks useRef where really usefull because I need to work with the same timer instance when displaying the Menu or restarting the game.
-
-### Continued development
-
-> _[TODO]_
 
 ### Useful resources
 
