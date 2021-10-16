@@ -28,7 +28,7 @@ export const GameSettingScreen: React.FC<{ gameSetting: GameSetting }> = ({
           selected={setting.gridSize}
           onSelect={(value) => game.setGridSize(value)}
         />
-        <Link to={`/${setting.numberOfPlayers === 1 ? "solo" : "multi"}`}>
+        <Link to={`/game`}>
           <button
             className="button-navigation"
             onClick={() => game.localStore.save()}

@@ -18,7 +18,7 @@ describe("start game screen", () => {
 
   beforeEach(() => {
     render(
-      <MemoryRouter initialEntries={["/new"]}>
+      <MemoryRouter initialEntries={["/"]}>
         <WrappedApp />
       </MemoryRouter>
     );
@@ -99,7 +99,7 @@ describe("start game screen", () => {
     await act(async () => {
       await userEvent.click(btnStart);
     });
-    expect(location.pathname).toBe("/solo");
+    expect(location.pathname).toBe("/game");
     expect(gameSetting.value.gridSize).toBe("4x4");
   });
 
@@ -110,7 +110,7 @@ describe("start game screen", () => {
       await userEvent.click(btnMulti);
       await userEvent.click(btnStart);
     });
-    expect(location.pathname).toBe("/multi");
+    expect(location.pathname).toBe("/game");
     expect(gameSetting.value.numberOfPlayers).toBe(2);
   });
 
@@ -121,7 +121,7 @@ describe("start game screen", () => {
       await userEvent.click(btn6x6);
       await userEvent.click(btnStart);
     });
-    expect(location.pathname).toBe("/solo");
+    expect(location.pathname).toBe("/game");
     expect(gameSetting.value.gridSize).toBe("6x6");
   });
 });

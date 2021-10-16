@@ -21,16 +21,13 @@ export const App = () => {
       {isLoaded && (
         <div className="game-app">
           <Switch>
-            <Route path="/setting">
+            <Route path="/game">
+              <InGame setting={gameSetting} />
+            </Route>
+            <Route path="/">
               <GameSettingScreen gameSetting={gameSetting} />
             </Route>
-            <Route path="/solo">
-              <InGame setting={gameSetting} />
-            </Route>
-            <Route path="/multi">
-              <InGame setting={gameSetting} />
-            </Route>
-            <Redirect to="/setting" />
+            <Redirect to="/" />
           </Switch>
         </div>
       )}
