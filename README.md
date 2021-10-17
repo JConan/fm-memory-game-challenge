@@ -13,6 +13,7 @@ This is a solution to the [Memory game challenge on Frontend Mentor](https://www
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
 - [Author](#author)
 - [Acknowledgments](#acknowledgments)
@@ -60,6 +61,10 @@ I also needed some sort of "time-based flip-flop switch" in order to delay the r
 - jest.advanceTimersByTime
 
 Hooks useRef where really usefull because I need to work with the same timer instance when displaying the Menu or restarting the game.
+
+### Continued development
+
+Reorganize the state management and use XState where I feel it to be quite revelant in this use case.
 
 ### Useful resources
 
