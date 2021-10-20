@@ -59,6 +59,7 @@
     "@testing-library/react-hooks": "^7.0.2",
     "@types/faker": "^5.5.8",
     "@types/sinonjs__fake-timers": "^6.0.4",
+    "@xstate/test": "^0.4.2",
     "faker": "^5.5.3"
   }
 }

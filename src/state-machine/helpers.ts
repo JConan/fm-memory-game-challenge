@@ -28,9 +28,16 @@ export const testMachine = (machine: StateMachine<any, any, any>) => {
 
   const geStateStacks = () =>
     subscriber.mock.calls.map(([state], id) => ({ id, state } as StateStack));
+
+  const getStatesSequence = () => [
+    machine.initial,
+    ...geStateStacks().map(({ state }) => state.value),
+  ];
+
   return {
     service,
     subscriber,
+    getStatesSequence,
     waitForStateToBe,
     send: service.send,
   };
