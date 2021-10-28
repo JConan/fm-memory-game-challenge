@@ -1,11 +1,5 @@
 import store from "store2";
-import {
-  createMachine,
-  assign,
-  DoneInvokeEvent,
-  MachineConfig,
-  MachineOptions,
-} from "xstate";
+import { createMachine, assign, MachineConfig, MachineOptions } from "xstate";
 
 export interface SettingContext {
   gridSize?: "4x4" | "6x6";

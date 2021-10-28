@@ -1,44 +1,56 @@
-import { waitFor } from "@testing-library/dom";
-import { interpret, State, StateMachine } from "xstate";
+import { SimulatedClock } from "xstate/lib/SimulatedClock";
+import { interpret } from "xstate/lib/interpreter";
+import { EventObject, StateMachine, Typestate } from "xstate/lib/types";
+import { State } from "xstate/lib/State";
+import { init } from "xstate/lib/actionTypes";
 
-export const testMachine = (machine: StateMachine<any, any, any>) => {
-  const subscriber = jest.fn();
+export const InterpretWithSimulation = <TContext, TEvent extends EventObject>(
+  machine: StateMachine<TContext, any, TEvent, Typestate<TContext>>
+) => {
+  const callStack = jest.fn();
+  const clock = new SimulatedClock();
+  const service = interpret(machine, { clock }).onTransition(callStack).start();
 
-  const service = interpret(machine);
-  service.subscribe(subscriber);
-  service.start();
+  const getTransitions = () =>
+    callStack.mock.calls.map(
+      ([state, event]) =>
+        ({ state, event } as { state: State<TContext>; event: TEvent })
+    );
 
-  const waitForStateToBe = (name: string, after?: StateStack) =>
-    waitFor(() => {
-      const stacks = geStateStacks().filter(({ state }) => state.matches(name));
-
-      if (stacks.length > 0) {
-        if (after) {
-          const idx = stacks.findIndex((stack) => stack.id >= after.id);
-          if (stacks.length >= idx + 1) return stacks[idx + 1];
-        } else {
-          return stacks.pop()!;
-        }
-      }
-
-      throw new Error("retry");
+  const waitUntil = (cb: (state: State<TContext>, event: TEvent) => boolean) =>
+    new Promise<State<TContext> | null>(async (resolve) => {
+      let retry = 10;
+      do {
+        await sleep(50);
+        getTransitions().forEach(
+          ({ state, event }) => cb(state, event) && resolve(state)
+        );
+      } while (retry-- > 0);
+      resolve(null);
     });
 
-  type StateStack = { id: number; state: State<any> };
-
-  const geStateStacks = () =>
-    subscriber.mock.calls.map(([state], id) => ({ id, state } as StateStack));
-
-  const getStatesSequence = () => [
-    machine.initial,
-    ...geStateStacks().map(({ state }) => state.value),
-  ];
-
   return {
+    clock,
     service,
-    subscriber,
-    getStatesSequence,
-    waitForStateToBe,
     send: service.send,
+    getTransitions,
+    getLastTransitions: () => getTransitions().pop()!,
+    getChangedStates: () => [
+      machine.initial,
+      ...getTransitions()
+        .filter(({ state }) => state.changed === true)
+        .map(({ state }) => state.value),
+    ],
+    waitUntil,
   };
+};
+
+const sleep = async (ms: number) => {
+  clearTimeout(
+    await new Promise((resolve) => {
+      const timeoutId: NodeJS.Timeout = setTimeout(() => {
+        resolve(timeoutId);
+      }, 50);
+    })
+  );
 };
