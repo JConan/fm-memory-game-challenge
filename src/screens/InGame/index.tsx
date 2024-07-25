@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useTimer } from "../../hooks/useTimer";
 import { GameSetting } from "../../hooks/useGameSetting";
@@ -29,7 +29,7 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
     restartGame: resetTiles,
   } = useGameCore(setting);
   const timer = useTimer();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const remainPairRef = useRef<number>(remainPair);
 
@@ -83,7 +83,7 @@ export const InGame: React.FC<{ setting: GameSetting }> = ({
   };
 
   const newGame = () => {
-    history.push("/");
+    navigate("/");
   };
 
   return (

@@ -1,14 +1,13 @@
 import userEvent from "@testing-library/user-event";
-import { useLocation, MemoryRouter } from "react-router";
+import { useLocation, MemoryRouter, Location } from "react-router-dom";
 import { render, screen } from "@testing-library/react";
-import { Location } from "history";
 import { GameSettingScreen } from "../GameSetting";
 import { act } from "react-dom/test-utils";
 import { useGameSetting, GameSetting } from "../../hooks/useGameSetting";
 
 describe("start game screen", () => {
   let gameSetting: GameSetting = undefined!;
-  let location: Location = undefined!;
+  let location: Location | undefined = undefined!;
 
   const WrappedApp = () => {
     gameSetting = useGameSetting();
@@ -99,7 +98,7 @@ describe("start game screen", () => {
     await act(async () => {
       await userEvent.click(btnStart);
     });
-    expect(location.pathname).toBe("/game");
+    expect(location!.pathname).toBe("/game");
     expect(gameSetting.value.gridSize).toBe("4x4");
   });
 
@@ -110,7 +109,7 @@ describe("start game screen", () => {
       await userEvent.click(btnMulti);
       await userEvent.click(btnStart);
     });
-    expect(location.pathname).toBe("/game");
+    expect(location!.pathname).toBe("/game");
     expect(gameSetting.value.numberOfPlayers).toBe(2);
   });
 
@@ -121,7 +120,7 @@ describe("start game screen", () => {
       await userEvent.click(btn6x6);
       await userEvent.click(btnStart);
     });
-    expect(location.pathname).toBe("/game");
+    expect(location!.pathname).toBe("/game");
     expect(gameSetting.value.gridSize).toBe("6x6");
   });
 });

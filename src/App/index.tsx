@@ -1,6 +1,6 @@
 import { useGameSetting } from "../hooks/useGameSetting";
 import { useEffect, useState } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { GameSettingScreen } from "../screens/GameSetting";
 import { InGame } from "../screens/InGame";
 import "./style.scss";
@@ -20,15 +20,14 @@ export const App = () => {
       {!isLoaded && <div role="progressbar">loading ...</div>}
       {isLoaded && (
         <div className="game-app">
-          <Switch>
-            <Route path="/game">
-              <InGame setting={gameSetting} />
-            </Route>
-            <Route path="/">
-              <GameSettingScreen gameSetting={gameSetting} />
-            </Route>
-            <Redirect to="/" />
-          </Switch>
+          <Routes>
+            <Route path="/game" element={<InGame setting={gameSetting} />} />
+            <Route
+              path="/"
+              element={<GameSettingScreen gameSetting={gameSetting} />}
+            />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
         </div>
       )}
     </>
