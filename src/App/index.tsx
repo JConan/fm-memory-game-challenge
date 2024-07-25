@@ -1,6 +1,6 @@
 import { useGameSetting } from "../hooks/useGameSetting";
 import { useEffect, useState } from "react";
-import { Route, Switch, Redirect } from "react-router";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { GameSettingScreen } from "../screens/GameSetting";
 import { InGame } from "../screens/InGame";
 import "./style.scss";

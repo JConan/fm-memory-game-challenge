@@ -22,9 +22,10 @@
   font-size: 18px;
 }
 @mixin button-color-primary {
-  color: #fcfcfc;
-  background: #fda214;
-
+  & {
+    color: #fcfcfc;
+    background: #fda214;
+  }
   &:hover {
     color: #fcfcfc;
     background: #ffb84a;
@@ -40,8 +41,10 @@
   }
 }
 @mixin button-color-options {
-  color: #fcfcfc;
-  background: #bcced9;
+  & {
+    color: #fcfcfc;
+    background: #bcced9;
+  }
 
   &:hover {
     color: #fcfcfc;

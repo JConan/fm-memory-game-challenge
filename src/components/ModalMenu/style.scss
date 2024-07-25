@@ -13,7 +13,9 @@
   button {
     @include button-size-big();
     @include button-color-secondary();
-    width: 279px;
+    & {
+      width: 279px;
+    }
   }
 
   button:first-child {

@@ -21,6 +21,7 @@ import {
   faDragon,
   faEgg,
 } from "@fortawesome/free-solid-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export const loadIcons = () =>
   [
@@ -44,4 +45,4 @@ export const loadIcons = () =>
     faDog,
     faDragon,
     faEgg,
-  ].map((definition) => <FontAwesomeIcon icon={definition} />);
+  ].map((definition) => <FontAwesomeIcon icon={definition as IconProp} />);

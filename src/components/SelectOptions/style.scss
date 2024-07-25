@@ -21,7 +21,9 @@
     button {
       @include button-size-normal();
       @include button-color-options();
-      margin: 5.5px;
+      & {
+        margin: 5.5px;
+      }
     }
   }
 }

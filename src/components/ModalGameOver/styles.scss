@@ -56,8 +56,10 @@
   button {
     @include button-size-big();
     @include button-color-primary();
-    width: 279px;
-    margin-bottom: 16px;
+    & {
+      width: 279px;
+      margin-bottom: 16px;
+    }
   }
 
   button:last-child {

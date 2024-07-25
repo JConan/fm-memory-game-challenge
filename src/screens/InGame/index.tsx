@@ -1,4 +1,4 @@
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useTimer } from "../../hooks/useTimer";
 import { GameSetting } from "../../hooks/useGameSetting";
