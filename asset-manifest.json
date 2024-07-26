@@ -1,0 +1,35 @@
+{
+  "files": {
+    "main.css": "/static/css/main.27d776a8.css",
+    "main.js": "/static/js/main.8419f0af.js",
+    "static/js/163.44829640.chunk.js": "/static/js/163.44829640.chunk.js",
+    "static/media/AtkinsonHyperlegible-BoldItalic.svg": "/static/media/AtkinsonHyperlegible-BoldItalic.03075cea4699d5d58f3d.svg",
+    "static/media/AtkinsonHyperlegible-Italic.svg": "/static/media/AtkinsonHyperlegible-Italic.17262461f78e10618216.svg",
+    "static/media/AtkinsonHyperlegible-Bold.svg": "/static/media/AtkinsonHyperlegible-Bold.1f8b094e8703f9675c26.svg",
+    "static/media/AtkinsonHyperlegible-Regular.svg": "/static/media/AtkinsonHyperlegible-Regular.7585d3a13a44a1fb515c.svg",
+    "static/media/AtkinsonHyperlegible-BoldItalic.eot": "/static/media/AtkinsonHyperlegible-BoldItalic.7ca86690e5d3b51e6001.eot",
+    "static/media/AtkinsonHyperlegible-Bold.eot": "/static/media/AtkinsonHyperlegible-Bold.872a1a6a4c1b37254fb7.eot",
+    "static/media/AtkinsonHyperlegible-BoldItalic.ttf": "/static/media/AtkinsonHyperlegible-BoldItalic.ca8fcc8972e3d9c295ce.ttf",
+    "static/media/AtkinsonHyperlegible-Bold.ttf": "/static/media/AtkinsonHyperlegible-Bold.71884df09cf214c6d111.ttf",
+    "static/media/AtkinsonHyperlegible-Italic.eot": "/static/media/AtkinsonHyperlegible-Italic.dae06460627f38b3d481.eot",
+    "static/media/AtkinsonHyperlegible-Italic.ttf": "/static/media/AtkinsonHyperlegible-Italic.6c1d81ad855e22a60773.ttf",
+    "static/media/AtkinsonHyperlegible-Regular.eot": "/static/media/AtkinsonHyperlegible-Regular.c93e8124eaf3ea7bc8e8.eot",
+    "static/media/AtkinsonHyperlegible-Regular.ttf": "/static/media/AtkinsonHyperlegible-Regular.a70da210f4f6acea3fd1.ttf",
+    "static/media/AtkinsonHyperlegible-BoldItalic.woff": "/static/media/AtkinsonHyperlegible-BoldItalic.a1590e61033bdeda52d2.woff",
+    "static/media/AtkinsonHyperlegible-Italic.woff": "/static/media/AtkinsonHyperlegible-Italic.dd541641b6c58f896e5f.woff",
+    "static/media/AtkinsonHyperlegible-Bold.woff": "/static/media/AtkinsonHyperlegible-Bold.77a0885315926dab0ce3.woff",
+    "static/media/AtkinsonHyperlegible-Regular.woff": "/static/media/AtkinsonHyperlegible-Regular.5e678880da9bdcbb4a26.woff",
+    "static/media/AtkinsonHyperlegible-BoldItalic.woff2": "/static/media/AtkinsonHyperlegible-BoldItalic.ce2b540e4366fc5b99a7.woff2",
+    "static/media/AtkinsonHyperlegible-Italic.woff2": "/static/media/AtkinsonHyperlegible-Italic.4b613d4c808aef4c9701.woff2",
+    "static/media/AtkinsonHyperlegible-Bold.woff2": "/static/media/AtkinsonHyperlegible-Bold.01ff9c3d401c35bbc48c.woff2",
+    "static/media/AtkinsonHyperlegible-Regular.woff2": "/static/media/AtkinsonHyperlegible-Regular.933cb7d68a7ba320f8ca.woff2",
+    "index.html": "/index.html",
+    "main.27d776a8.css.map": "/static/css/main.27d776a8.css.map",
+    "main.8419f0af.js.map": "/static/js/main.8419f0af.js.map",
+    "163.44829640.chunk.js.map": "/static/js/163.44829640.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.27d776a8.css",
+    "static/js/main.8419f0af.js"
+  ]
+}
