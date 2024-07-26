@@ -15,7 +15,7 @@ export const useDelayedSignal: UseDelayedSignal = ({
   delay,
 } = defaultProps) => {
   const isMounted = useRef(true);
-  const handle = useRef<number>();
+  const handle = useRef<NodeJS.Timeout>();
   const [state, setState] = useState(false);
 
   useEffect(() => {
