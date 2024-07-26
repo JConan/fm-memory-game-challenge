@@ -12,6 +12,17 @@ export const App = () => {
   useEffect(() => {
     gameSetting.localStore.load();
     setLoaded(true);
+
+    window.addEventListener("message", (event) => {
+      if (event.data === "getHeight") {
+        const height = document.body.scrollHeight;
+        event.source?.postMessage(
+          { type: "getHeight", height },
+          event.origin as any
+        );
+      }
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
