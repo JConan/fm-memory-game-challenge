@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/fm-memory-game-challenge/static/css/main.848c0962.css",
+    "main.css": "/fm-memory-game-challenge/static/css/main.92cf5b58.css",
     "main.js": "/fm-memory-game-challenge/static/js/main.53bff072.js",
     "static/js/163.44829640.chunk.js": "/fm-memory-game-challenge/static/js/163.44829640.chunk.js",
     "static/media/AtkinsonHyperlegible-BoldItalic.svg": "/fm-memory-game-challenge/static/media/AtkinsonHyperlegible-BoldItalic.03075cea4699d5d58f3d.svg",
@@ -24,12 +24,12 @@
     "static/media/AtkinsonHyperlegible-Bold.woff2": "/fm-memory-game-challenge/static/media/AtkinsonHyperlegible-Bold.01ff9c3d401c35bbc48c.woff2",
     "static/media/AtkinsonHyperlegible-Regular.woff2": "/fm-memory-game-challenge/static/media/AtkinsonHyperlegible-Regular.933cb7d68a7ba320f8ca.woff2",
     "index.html": "/fm-memory-game-challenge/index.html",
-    "main.848c0962.css.map": "/fm-memory-game-challenge/static/css/main.848c0962.css.map",
+    "main.92cf5b58.css.map": "/fm-memory-game-challenge/static/css/main.92cf5b58.css.map",
     "main.53bff072.js.map": "/fm-memory-game-challenge/static/js/main.53bff072.js.map",
     "163.44829640.chunk.js.map": "/fm-memory-game-challenge/static/js/163.44829640.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.848c0962.css",
+    "static/css/main.92cf5b58.css",
     "static/js/main.53bff072.js"
   ]
 }
